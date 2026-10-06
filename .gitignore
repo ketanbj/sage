@@ -1,0 +1,81 @@
+# Local configuration and credentials; keep environment templates.
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# SAGE runs, downloaded upstreams, and local workspace state.
+/runs/
+/.sage/
+
+# Python environments, bytecode, and tool caches.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Python packaging and Rust/native build outputs.
+build/
+build-*/
+dist/
+*.egg-info/
+*.egg
+*.whl
+target/
+/ports/einsums-rs/python/pyeinsums/_native/
+/ports/einsums-cpp/python/pyeinsums/_native/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.pdb
+*.dSYM/
+
+# Local logs, editor backups, and operating-system metadata.
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Keep uv.lock, Cargo.lock, source fixtures, configs, and API manifests tracked.
+
+# Downloaded JavaScript dependencies and private presentation builds.
+node_modules/
+.build/
+/.chart-data-*/
+
+# PowerPoint/Office lock files and local export scratch files.
+~$*
+*.tmp
+
+# Kani compiler scratch outputs; retain checked-in proof harnesses.
+*.kani-metadata.json
+*.symtab.json
+*.goto
+
+# Generated package metadata and local virtual environments.
+.python-version.local
+/uv-cache/

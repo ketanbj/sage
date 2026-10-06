@@ -1,0 +1,9 @@
+Contract for the independent modern C++ translation (offline checked-in implementation).
+The pinned Einsums source already uses C++20. Translate the bounded semantics into
+an independent standard-library-only implementation, rather than wrapping Einsums.
+Use owned storage, checked shapes/indexing, and borrowed std::span<const double> views.
+Implement copy, add, elementwise multiply, transpose, matmul, and scalar scaling.
+Domain: rank-two contiguous binary64, dimensions 1..4, signed-byte inputs / 8.
+Keep the 36-byte input protocol and output shape/strides/values unchanged.
+Preserve numerical behavior without fast-math or fused multiply-add contraction.
+Separate native wrapper validation from the formal proof of production kernels.

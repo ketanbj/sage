@@ -1,0 +1,22 @@
+schema_version: "1.0"
+candidate_id: dkh
+display_name: DKH
+description: Candidate scientific target named by stakeholders; its bounded unit requires discovery.
+state: PROPOSED
+assessment:
+  scientific_value: null
+  proposed_translation_unit: null
+  languages: []
+  build_complexity: null
+  tests: []
+  reference_implementations: []
+  numerical_equivalence_requirements: []
+  symsan_compatibility: null
+  developer_availability: []
+  risks:
+    - Scope, ownership, references, and scientific acceptance needs are unknown.
+  evidence: []
+  confidence: NOT_ASSESSED
+  open_pi_questions:
+    - What does DKH refer to in the intended repository and workflow?
+    - What bounded translation unit and observable scientific behavior should be evaluated?

@@ -1,0 +1,33 @@
+schema_version: "1.1"
+target: null
+symsan:
+  upstream_url: https://github.com/R-Fuzz/symsan.git
+  upstream_commit: ecbe8a7d6a5ceb687df16660d6f3f60f844b5bd4
+  image: sage-symsan:ecbe8a7
+  enabled: true
+  trace_only: false
+  timeout_seconds: 30
+  max_tasks: 128
+  max_memory_mb: 2048
+  max_output_bytes: 10485760
+  max_corpus: 128
+tests:
+  seed: 12345
+  random_cases: 8
+  max_points: 64
+  max_primitives: 8
+  max_abs_coordinate: 100.0
+equivalence:
+  policy_version: unselected
+  atol: 1.0e-14
+  rtol: 1.0e-10
+  signed_zero_equal: true
+execution:
+  timeout_seconds: 5
+  max_memory_mb: 512
+provider:
+  name: offline
+  prompt_version: einsums-library-v1
+  timeout_seconds: 60
+  max_retries: 2
+runs_dir: runs

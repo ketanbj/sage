@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "einsums-rs"
+version = "0.2.0"
+description = "Einsums CPU Python APIs backed by Rust"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0"]
+license = {text = "MIT"}
+
+[tool.hatch.build.targets.wheel]
+packages = ["python/einsums", "python/pyeinsums", "python/einsums_rs"]
+
+[tool.hatch.build.hooks.custom]
+path = "hatch_build.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "python", "Cargo.toml", "Cargo.lock", "pyproject.toml", "hatch_build.py", "README.md", "api-surface.json", "LICENSE.txt"]
+exclude = ["**/__pycache__", "**/*.pyc", "python/pyeinsums/_native"]

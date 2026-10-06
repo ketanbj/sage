@@ -1,0 +1,39 @@
+schema_version: '1.1'
+target:
+  name: einsums
+  upstream_url: https://github.com/Einsums/Einsums.git
+  upstream_commit: 22a115978041e905461b24d9ca2a17bfcce01f32
+symsan:
+  upstream_url: https://github.com/R-Fuzz/symsan.git
+  upstream_commit: ecbe8a7d6a5ceb687df16660d6f3f60f844b5bd4
+  image: sage-einsums:22a1159
+  enabled: true
+  trace_only: false
+  trace_bounds: false
+  timeout_seconds: 120
+  max_tasks: 2048
+  max_memory_mb: 2048
+  max_output_bytes: 10485760
+  max_corpus: 2048
+  max_tasks_per_seed: 48
+tests:
+  seed: 12345
+  random_cases: 0
+  max_points: 64
+  max_primitives: 8
+  max_abs_coordinate: 100.0
+equivalence:
+  policy_version: einsums-library-1.0
+  atol: 1.0e-12
+  rtol: 1.0e-10
+  signed_zero_equal: true
+execution:
+  timeout_seconds: 5
+  max_memory_mb: 512
+provider:
+  target_language: cpp20
+  name: offline
+  prompt_version: einsums-library-v1
+  timeout_seconds: 60
+  max_retries: 2
+runs_dir: runs

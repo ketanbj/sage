@@ -1,0 +1,7 @@
+Translate the supplied bounded Einsums C++20 tensor implementation and harness to standalone Rust.
+Use only the Rust standard library. Preserve the exact 36-byte binary input protocol, input rejection
+(exit 65), rank-two row-major f64 tensor behavior, and JSON shape/strides/values output. Support the
+six harness operations: copy/indexing, addition, elementwise multiplication, transpose, matrix
+contraction, scalar multiplication. Dimensions are 1..4 and int8 payloads are scaled by 1/8.
+Do not call C++ or NumPy. Do not claim coverage beyond this bounded CPU tensor contract.
+Return code and the requested structured metadata. Model confidence is advisory only.

@@ -1,0 +1,95 @@
+{
+  "schema_version": "sage-cpp20-verification-summary-1.0",
+  "scope": "Pinned Einsums CPU/Python semantic translation; GPU excluded; exact upstream C++ overload and ABI compatibility not established",
+  "implementation_status": "IMPLEMENTED_WITH_DOCUMENTED_DIFFERENCES",
+  "compatibility_status": "INCOMPLETE_SCOPE",
+  "cpu_core_exports": 90,
+  "public_utility_helpers": 16,
+  "dtypes": [
+    "float32",
+    "float64",
+    "complex64",
+    "complex128"
+  ],
+  "implementation_checks": {
+    "project_pytest": {
+      "passed": 134,
+      "skipped": 5,
+      "reason": "C++-specific regression checks skipped for the Rust backend"
+    },
+    "native_profile_grid": {
+      "passed": 4416
+    },
+    "python_profile_runner": {
+      "passed": 69
+    },
+    "native_asan_ubsan_contracts": {
+      "passed": 2
+    },
+    "upstream_tensor_contractions": {
+      "passed": 171,
+      "gpu_skipped": 88,
+      "slow_deselected": 96
+    },
+    "upstream_linalg_views": {
+      "passed": 448,
+      "failed": 40,
+      "slow_deselected": 16,
+      "failure_scope": "Literal eigenvalue order and nonunique full-SVD/nullspace basis comparisons; independent residual checks pass"
+    }
+  },
+  "fresh_symsan_campaign": {
+    "directory": "../../runs/20261006T152014.013938Z-115b5d8bf7",
+    "generated_valid": 128,
+    "generated_invalid_rejected": 351,
+    "operations_with_evidence": 23,
+    "pass": 128,
+    "numerical_failures": 0,
+    "gate": "INCOMPLETE_SCOPE",
+    "instrumentation": "Input decoder only; no internal library path coverage"
+  },
+  "api_replay": {
+    "directory": "../../runs/20261006T151151.290470Z-einsums-api-cpp20",
+    "authenticated_inputs": 128,
+    "groups": 31,
+    "dtypes": 4,
+    "checks": 15872,
+    "pass": 13816,
+    "reference_disagreement": 2056,
+    "candidate_numerical_failures": 0,
+    "status": "DISCREPANCIES",
+    "new_generation": false,
+    "reference_disagreement_categories": {
+      "pseudoinverse": 512,
+      "truncated_svd": 512,
+      "truncated_syev": 478,
+      "complex_lyapunov": 256,
+      "lu": 232,
+      "nullspace": 43,
+      "general_eigen": 23
+    }
+  },
+  "formal_proof": {
+    "directory": "../../runs/20261005-einsums-cpp20-bounded-proof",
+    "paired_obligations": 32,
+    "operations": [
+      "copy",
+      "transpose"
+    ],
+    "scope": "Unmodified scalar kernels; binary64; rank two; dimensions 1\u20134; signed-byte inputs divided by eight",
+    "broad_api_proved": false
+  },
+  "pending": [
+    "Resolve documented reference and calling-contract differences",
+    "Expand generated payload and internal computation path coverage",
+    "Prove additional kernels and public interfaces",
+    "Validate downstream Psi4 and exact upstream C++ overload/ABI contracts",
+    "Benchmark and optimize native contractions, DFT and factorization workloads"
+  ],
+  "note": "Evidence directories are immutable versioned records; this summary tracks the current implementation. Do not interpret API presence or finite test agreement as universal equivalence.",
+  "install_checks": {
+    "native_headers_and_library": "PASS: standalone C++20 consumer linked installed shared library, typed views and structured inversion",
+    "python_wheel": "PASS: isolated Python 3.11/macOS arm64 install, solve, complex SVD, nested HDF5, negative singular matrix power; bundled HDF5 dependency",
+    "standalone_bounded_build": "PASS: SAGE_BUILD_FULL_API=OFF, native CTest without full API dependencies"
+  }
+}

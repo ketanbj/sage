@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sage-equivalence.local/schemas/translation-response-1.0.json",
+  "type": "object",
+  "required": ["code", "array_layout", "numerical_assumptions", "dependencies", "unsupported_constructs", "confidence", "function_map"],
+  "properties": {
+    "code": {"type": "string"},
+    "array_layout": {"type": "string"},
+    "numerical_assumptions": {"type": "array", "items": {"type": "string"}},
+    "dependencies": {"type": "array", "items": {"type": "string"}},
+    "unsupported_constructs": {"type": "array", "items": {"type": "string"}},
+    "confidence": {"type": "object", "additionalProperties": {"type": "string"}},
+    "function_map": {"type": "object", "additionalProperties": {"type": "string"}}
+  }
+}

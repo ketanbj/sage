@@ -1,0 +1,23 @@
+# Preserve reproducible source and proof-harness bytes across platforms.
+* text=auto
+*.py text eol=lf
+*.rs text eol=lf
+*.c text eol=lf
+*.cpp text eol=lf
+*.h text eol=lf
+*.hpp text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.toml text eol=lf
+*.lock text eol=lf
+*.md text eol=lf
+Dockerfile text eol=lf
+Makefile text eol=lf
+
+# Final presentation files stay binary.
+*.pptx binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.bin binary

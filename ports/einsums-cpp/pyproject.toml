@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling>=1.27", "cmake>=3.20"]
+build-backend = "hatchling.build"
+
+[project]
+name = "einsums-cpp20"
+version = "0.3.0"
+description = "Independent C++20 Einsums CPU and Python API"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0"]
+license = {text = "MIT"}
+
+[tool.hatch.build.targets.wheel]
+packages = ["python/einsums", "python/pyeinsums"]
+
+[tool.hatch.build.hooks.custom]
+path = "hatch_build.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["api", "python", "*.cpp", "*.hpp", "CMakeLists.txt", "pyproject.toml", "hatch_build.py", "README.md", "api-surface.json", "verification.json", "LICENSE.txt"]
+exclude = ["**/__pycache__", "**/*.pyc", "python/pyeinsums/_native"]

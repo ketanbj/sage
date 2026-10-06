@@ -1,0 +1,1096 @@
+{
+  "schema_version": "sage-tensor-expression-proof-1.0",
+  "target": "einsums",
+  "status": "BOUNDED_TENSOR_API_PROVED",
+  "scope": "Public Tensor constructor, six methods, shape, strides/indexing and ownership",
+  "operations": [
+    "copy",
+    "add",
+    "multiply",
+    "transpose",
+    "matmul",
+    "scale"
+  ],
+  "shapes": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      4,
+      4
+    ]
+  ],
+  "assumptions": [
+    "Rank-two contiguous owned tensors, each dimension 1..4; successful allocation.",
+    "Each leaf represents an arbitrary independent input, not a sampled value.",
+    "Arithmetic means deterministic binary64 + and *, with +0 initialization.",
+    "For cross-language and upstream claims, inputs/scalar are signed bytes /8.",
+    "Round-to-nearest, no fast-math, reassociation or fused multiply-add.",
+    "Trusted Kani 0.68.0/CBMC 6.11.0, Clang 18 and standard-library memory models.",
+    "Injective base-64 prefix-tree encoding (at most 17 tokens /102 bits)."
+  ],
+  "exclusions": [
+    "External upstream BLAS, public Einsums planner/dispatch/SIMD/OpenMP.",
+    "General Array fallback, other sizes/ranks/dtypes, aliasing and invalid inputs.",
+    "JSON/FFI/Python parsing and serialization are replay-tested, not model-checked.",
+    "NaN payloads, floating-point environment changes, allocation/lifetime failures.",
+    "The arithmetic interpretation and compiler are trusted, not verified toolchains."
+  ],
+  "source_commit": "22a115978041e905461b24d9ca2a17bfcce01f32",
+  "claim": "All 144 public Tensor obligations preserve the exact ordered expression specified for the six operations, including shape and unchanged inputs. Interpreting those expressions as binary64 establishes bounded functional equivalence under the recorded assumptions. Public JSON/FFI/Python paths route this domain to these methods; the adapters require native replay.",
+  "target_language": "rust",
+  "profile": "tensor-six",
+  "obligations": [
+    "copy_1x1",
+    "copy_1x2",
+    "copy_1x3",
+    "copy_1x4",
+    "copy_2x1",
+    "copy_2x2",
+    "copy_2x3",
+    "copy_2x4",
+    "copy_3x1",
+    "copy_3x2",
+    "copy_3x3",
+    "copy_3x4",
+    "copy_4x1",
+    "copy_4x2",
+    "copy_4x3",
+    "copy_4x4",
+    "add_1x1",
+    "add_1x2",
+    "add_1x3",
+    "add_1x4",
+    "add_2x1",
+    "add_2x2",
+    "add_2x3",
+    "add_2x4",
+    "add_3x1",
+    "add_3x2",
+    "add_3x3",
+    "add_3x4",
+    "add_4x1",
+    "add_4x2",
+    "add_4x3",
+    "add_4x4",
+    "multiply_1x1",
+    "multiply_1x2",
+    "multiply_1x3",
+    "multiply_1x4",
+    "multiply_2x1",
+    "multiply_2x2",
+    "multiply_2x3",
+    "multiply_2x4",
+    "multiply_3x1",
+    "multiply_3x2",
+    "multiply_3x3",
+    "multiply_3x4",
+    "multiply_4x1",
+    "multiply_4x2",
+    "multiply_4x3",
+    "multiply_4x4",
+    "transpose_1x1",
+    "transpose_1x2",
+    "transpose_1x3",
+    "transpose_1x4",
+    "transpose_2x1",
+    "transpose_2x2",
+    "transpose_2x3",
+    "transpose_2x4",
+    "transpose_3x1",
+    "transpose_3x2",
+    "transpose_3x3",
+    "transpose_3x4",
+    "transpose_4x1",
+    "transpose_4x2",
+    "transpose_4x3",
+    "transpose_4x4",
+    "matmul_1x1x1",
+    "matmul_1x1x2",
+    "matmul_1x1x3",
+    "matmul_1x1x4",
+    "matmul_1x2x1",
+    "matmul_1x2x2",
+    "matmul_1x2x3",
+    "matmul_1x2x4",
+    "matmul_1x3x1",
+    "matmul_1x3x2",
+    "matmul_1x3x3",
+    "matmul_1x3x4",
+    "matmul_1x4x1",
+    "matmul_1x4x2",
+    "matmul_1x4x3",
+    "matmul_1x4x4",
+    "matmul_2x1x1",
+    "matmul_2x1x2",
+    "matmul_2x1x3",
+    "matmul_2x1x4",
+    "matmul_2x2x1",
+    "matmul_2x2x2",
+    "matmul_2x2x3",
+    "matmul_2x2x4",
+    "matmul_2x3x1",
+    "matmul_2x3x2",
+    "matmul_2x3x3",
+    "matmul_2x3x4",
+    "matmul_2x4x1",
+    "matmul_2x4x2",
+    "matmul_2x4x3",
+    "matmul_2x4x4",
+    "matmul_3x1x1",
+    "matmul_3x1x2",
+    "matmul_3x1x3",
+    "matmul_3x1x4",
+    "matmul_3x2x1",
+    "matmul_3x2x2",
+    "matmul_3x2x3",
+    "matmul_3x2x4",
+    "matmul_3x3x1",
+    "matmul_3x3x2",
+    "matmul_3x3x3",
+    "matmul_3x3x4",
+    "matmul_3x4x1",
+    "matmul_3x4x2",
+    "matmul_3x4x3",
+    "matmul_3x4x4",
+    "matmul_4x1x1",
+    "matmul_4x1x2",
+    "matmul_4x1x3",
+    "matmul_4x1x4",
+    "matmul_4x2x1",
+    "matmul_4x2x2",
+    "matmul_4x2x3",
+    "matmul_4x2x4",
+    "matmul_4x3x1",
+    "matmul_4x3x2",
+    "matmul_4x3x3",
+    "matmul_4x3x4",
+    "matmul_4x4x1",
+    "matmul_4x4x2",
+    "matmul_4x4x3",
+    "matmul_4x4x4",
+    "scale_1x1",
+    "scale_1x2",
+    "scale_1x3",
+    "scale_1x4",
+    "scale_2x1",
+    "scale_2x2",
+    "scale_2x3",
+    "scale_2x4",
+    "scale_3x1",
+    "scale_3x2",
+    "scale_3x3",
+    "scale_3x4",
+    "scale_4x1",
+    "scale_4x2",
+    "scale_4x3",
+    "scale_4x4"
+  ],
+  "public_api_bindings": {
+    "ports/einsums-rs/src/api/bounded_tensor.rs": "306008724194429610f0098cd040f5da2e7edd3305a99e08d17adfd4cec57a48",
+    "ports/einsums-rs/src/api/mod.rs": "1ff2a2d3cb8205e7bd06f61b55f109aae97604bed293e67bdcd80d4a05a2750b",
+    "ports/einsums-rs/src/protocol.rs": "68db4fcdf8dd85126c89ac9bb162d0975be5dab69edbd83fbba426a0fbab840c",
+    "ports/einsums-cpp/api/bounded_tensor.hpp": "a1a831da51cb0940f1cdfe543f9482e2a6fb76a63b28b063019e4b6e62799dc5",
+    "ports/einsums-cpp/api/execute.cpp": "e77fa933de7c56083120055624e58e00267bd81393e6370c7114699b48aa1459",
+    "ports/einsums-cpp/driver.cpp": "9a45fa7c6e82ec5a8abe88b66f9aa88d76acbb73832aa408fffe9c1d0d5236dc",
+    "ports/einsums-cpp/library_driver.cpp": "fe25080196d179b43a825a7c59ea65e262600888e450624f868a672231d732d2"
+  },
+  "source_hashes": {
+    "tensor.hpp": "b84324dbcf963b64fbfe6f11eefd1ec2ea93eca4fbf9af49603047f527c5ef7b",
+    "expression.hpp": "f545ba29b6639c267ae80948ffd52288c0e88ce129ef3ed3f0245d54e799775b",
+    "tensor_source.rs": "eb79bd57a92ef2e4dc9aef5f5563d90fae602e90d02912df640db8023ad82dfd",
+    "kernels.hpp": "8091a7930e353894fb63465a892a7dda28a4633c13ab516c54c3e82bb6f508cd",
+    "expression.rs": "12cf9a08c281ca0569fcb6736b437c37d54ac876d8239ecc4140e7d053d49c42",
+    "proof_runner.py": "033a78fe20b9c592e316f17def63f46e36ab113f166314dcbdb18ffc265971a8",
+    "proof_support.py": "8096cd64fe1d53031d13ae8186b21707ff291c24a8b5a469f9c99acfba6610ea",
+    "compat.hpp": "ca0aeb8914efd39fe898b79a0d9e0f128615488ba96b56268f79e9213cb4d471",
+    "tensor.rs": "ca9472079ae898b4ea5eead0f4f563c97b265bdf07a51aeda65ad31d428ea712"
+  },
+  "tools": {
+    "kani": "0.68.0",
+    "cbmc": "6.11.0",
+    "compiler_image": "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87"
+  },
+  "rust_checks": {
+    "status": "PROVED",
+    "harnesses": [
+      "add_1x1",
+      "add_1x2",
+      "add_1x3",
+      "add_1x4",
+      "add_2x1",
+      "add_2x2",
+      "add_2x3",
+      "add_2x4",
+      "add_3x1",
+      "add_3x2",
+      "add_3x3",
+      "add_3x4",
+      "add_4x1",
+      "add_4x2",
+      "add_4x3",
+      "add_4x4",
+      "copy_1x1",
+      "copy_1x2",
+      "copy_1x3",
+      "copy_1x4",
+      "copy_2x1",
+      "copy_2x2",
+      "copy_2x3",
+      "copy_2x4",
+      "copy_3x1",
+      "copy_3x2",
+      "copy_3x3",
+      "copy_3x4",
+      "copy_4x1",
+      "copy_4x2",
+      "copy_4x3",
+      "copy_4x4",
+      "matmul_1x1x1",
+      "matmul_1x1x2",
+      "matmul_1x1x3",
+      "matmul_1x1x4",
+      "matmul_1x2x1",
+      "matmul_1x2x2",
+      "matmul_1x2x3",
+      "matmul_1x2x4",
+      "matmul_1x3x1",
+      "matmul_1x3x2",
+      "matmul_1x3x3",
+      "matmul_1x3x4",
+      "matmul_1x4x1",
+      "matmul_1x4x2",
+      "matmul_1x4x3",
+      "matmul_1x4x4",
+      "matmul_2x1x1",
+      "matmul_2x1x2",
+      "matmul_2x1x3",
+      "matmul_2x1x4",
+      "matmul_2x2x1",
+      "matmul_2x2x2",
+      "matmul_2x2x3",
+      "matmul_2x2x4",
+      "matmul_2x3x1",
+      "matmul_2x3x2",
+      "matmul_2x3x3",
+      "matmul_2x3x4",
+      "matmul_2x4x1",
+      "matmul_2x4x2",
+      "matmul_2x4x3",
+      "matmul_2x4x4",
+      "matmul_3x1x1",
+      "matmul_3x1x2",
+      "matmul_3x1x3",
+      "matmul_3x1x4",
+      "matmul_3x2x1",
+      "matmul_3x2x2",
+      "matmul_3x2x3",
+      "matmul_3x2x4",
+      "matmul_3x3x1",
+      "matmul_3x3x2",
+      "matmul_3x3x3",
+      "matmul_3x3x4",
+      "matmul_3x4x1",
+      "matmul_3x4x2",
+      "matmul_3x4x3",
+      "matmul_3x4x4",
+      "matmul_4x1x1",
+      "matmul_4x1x2",
+      "matmul_4x1x3",
+      "matmul_4x1x4",
+      "matmul_4x2x1",
+      "matmul_4x2x2",
+      "matmul_4x2x3",
+      "matmul_4x2x4",
+      "matmul_4x3x1",
+      "matmul_4x3x2",
+      "matmul_4x3x3",
+      "matmul_4x3x4",
+      "matmul_4x4x1",
+      "matmul_4x4x2",
+      "matmul_4x4x3",
+      "matmul_4x4x4",
+      "multiply_1x1",
+      "multiply_1x2",
+      "multiply_1x3",
+      "multiply_1x4",
+      "multiply_2x1",
+      "multiply_2x2",
+      "multiply_2x3",
+      "multiply_2x4",
+      "multiply_3x1",
+      "multiply_3x2",
+      "multiply_3x3",
+      "multiply_3x4",
+      "multiply_4x1",
+      "multiply_4x2",
+      "multiply_4x3",
+      "multiply_4x4",
+      "scale_1x1",
+      "scale_1x2",
+      "scale_1x3",
+      "scale_1x4",
+      "scale_2x1",
+      "scale_2x2",
+      "scale_2x3",
+      "scale_2x4",
+      "scale_3x1",
+      "scale_3x2",
+      "scale_3x3",
+      "scale_3x4",
+      "scale_4x1",
+      "scale_4x2",
+      "scale_4x3",
+      "scale_4x4",
+      "transpose_1x1",
+      "transpose_1x2",
+      "transpose_1x3",
+      "transpose_1x4",
+      "transpose_2x1",
+      "transpose_2x2",
+      "transpose_2x3",
+      "transpose_2x4",
+      "transpose_3x1",
+      "transpose_3x2",
+      "transpose_3x3",
+      "transpose_3x4",
+      "transpose_4x1",
+      "transpose_4x2",
+      "transpose_4x3",
+      "transpose_4x4"
+    ]
+  },
+  "reused_method_checks": {
+    "bundle": "runs/20261006-tensor-six-rust",
+    "manifest_sha256": "88cda61b8b94e11556c5e23983ce2becd2eda7477b9cb8c10fc5ff0f6d6cedbd",
+    "identical_proof_input_hashes": {
+      "tensor_source.rs": "eb79bd57a92ef2e4dc9aef5f5563d90fae602e90d02912df640db8023ad82dfd",
+      "tensor.rs": "ca9472079ae898b4ea5eead0f4f563c97b265bdf07a51aeda65ad31d428ea712",
+      "expression.rs": "12cf9a08c281ca0569fcb6736b437c37d54ac876d8239ecc4140e7d053d49c42"
+    },
+    "raw_log_hashes": {
+      "rust-six.stdout": "de2e9363c38e2a828bdc937aaa82847d0f4f87e3378471def2eb500cd0e7afc2"
+    },
+    "reason": "Successful methods reused; certificates and fault controls rerun."
+  },
+  "negative_controls": {
+    "copy": {
+      "detected": true
+    },
+    "add": {
+      "detected": true
+    },
+    "multiply": {
+      "detected": true
+    },
+    "transpose": {
+      "detected": true
+    },
+    "matmul": {
+      "detected": true
+    },
+    "scale": {
+      "detected": true
+    }
+  },
+  "native_fault_replay": {
+    "status": "PASS",
+    "controls": {
+      "copy": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "add": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "multiply": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "transpose": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "matmul": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          4
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "scale": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      }
+    },
+    "checker_source_sha256": "033a78fe20b9c592e316f17def63f46e36ab113f166314dcbdb18ffc265971a8"
+  },
+  "commands": [
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/kani-driver",
+        "--version"
+      ],
+      "started_at": "2026-10-06T18:57:31.759371+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/cbmc",
+        "--version"
+      ],
+      "started_at": "2026-10-06T18:57:31.816878+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Id}}",
+        "sage-einsums:22a1159"
+      ],
+      "started_at": "2026-10-06T18:57:31.823526+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/kani-driver",
+        "runs/20261006-repository-rust-six/negative-copy/tensor.rs",
+        "--harness",
+        "copy_2x3",
+        "--output-format",
+        "regular"
+      ],
+      "started_at": "2026-10-06T18:57:31.876335+00:00",
+      "returncode": 1
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/kani-driver",
+        "runs/20261006-repository-rust-six/negative-add/tensor.rs",
+        "--harness",
+        "add_2x3",
+        "--output-format",
+        "regular"
+      ],
+      "started_at": "2026-10-06T18:57:43.380547+00:00",
+      "returncode": 1
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/kani-driver",
+        "runs/20261006-repository-rust-six/negative-multiply/tensor.rs",
+        "--harness",
+        "multiply_2x3",
+        "--output-format",
+        "regular"
+      ],
+      "started_at": "2026-10-06T18:57:58.865220+00:00",
+      "returncode": 1
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/kani-driver",
+        "runs/20261006-repository-rust-six/negative-transpose/tensor.rs",
+        "--harness",
+        "transpose_2x3",
+        "--output-format",
+        "regular"
+      ],
+      "started_at": "2026-10-06T18:58:14.298569+00:00",
+      "returncode": 1
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/kani-driver",
+        "runs/20261006-repository-rust-six/negative-matmul/tensor.rs",
+        "--harness",
+        "matmul_2x3x4",
+        "--output-format",
+        "regular"
+      ],
+      "started_at": "2026-10-06T18:58:41.311075+00:00",
+      "returncode": 1
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/kani-driver",
+        "runs/20261006-repository-rust-six/negative-scale/tensor.rs",
+        "--harness",
+        "scale_2x3",
+        "--output-format",
+        "regular"
+      ],
+      "started_at": "2026-10-06T18:59:12.624740+00:00",
+      "returncode": 1
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/native-copy.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/native-copy"
+      ],
+      "started_at": "2026-10-06T18:59:28.246273+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/negative-copy/native-copy.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/negative-copy/native-copy"
+      ],
+      "started_at": "2026-10-06T18:59:29.026879+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/native-copy"
+      ],
+      "started_at": "2026-10-06T18:59:29.245658+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/negative-copy/native-copy"
+      ],
+      "started_at": "2026-10-06T18:59:29.664908+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/native-add.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/native-add"
+      ],
+      "started_at": "2026-10-06T18:59:30.040471+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/negative-add/native-add.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/negative-add/native-add"
+      ],
+      "started_at": "2026-10-06T18:59:30.297030+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/native-add"
+      ],
+      "started_at": "2026-10-06T18:59:30.538373+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/negative-add/native-add"
+      ],
+      "started_at": "2026-10-06T18:59:30.902882+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/native-multiply.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/native-multiply"
+      ],
+      "started_at": "2026-10-06T18:59:31.292870+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/negative-multiply/native-multiply.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/negative-multiply/native-multiply"
+      ],
+      "started_at": "2026-10-06T18:59:31.549083+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/native-multiply"
+      ],
+      "started_at": "2026-10-06T18:59:31.788407+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/negative-multiply/native-multiply"
+      ],
+      "started_at": "2026-10-06T18:59:32.241985+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/native-transpose.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/native-transpose"
+      ],
+      "started_at": "2026-10-06T18:59:32.624449+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/negative-transpose/native-transpose.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/negative-transpose/native-transpose"
+      ],
+      "started_at": "2026-10-06T18:59:32.904462+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/native-transpose"
+      ],
+      "started_at": "2026-10-06T18:59:33.179499+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/negative-transpose/native-transpose"
+      ],
+      "started_at": "2026-10-06T18:59:33.577414+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/native-matmul.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/native-matmul"
+      ],
+      "started_at": "2026-10-06T18:59:33.934795+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/negative-matmul/native-matmul.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/negative-matmul/native-matmul"
+      ],
+      "started_at": "2026-10-06T18:59:34.162269+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/native-matmul"
+      ],
+      "started_at": "2026-10-06T18:59:34.382908+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/negative-matmul/native-matmul"
+      ],
+      "started_at": "2026-10-06T18:59:34.741232+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/native-scale.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/native-scale"
+      ],
+      "started_at": "2026-10-06T18:59:35.172942+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "rustc",
+        "--edition=2021",
+        "-C",
+        "opt-level=2",
+        "-C",
+        "target-feature=-fma",
+        "runs/20261006-repository-rust-six/negative-scale/native-scale.rs",
+        "-o",
+        "runs/20261006-repository-rust-six/negative-scale/native-scale"
+      ],
+      "started_at": "2026-10-06T18:59:35.418999+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/native-scale"
+      ],
+      "started_at": "2026-10-06T18:59:35.657670+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "runs/20261006-repository-rust-six/negative-scale/native-scale"
+      ],
+      "started_at": "2026-10-06T18:59:36.026550+00:00",
+      "returncode": 3
+    }
+  ],
+  "finished_at": "2026-10-06T18:59:36.392655+00:00"
+}

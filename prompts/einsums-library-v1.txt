@@ -1,0 +1,5 @@
+SAGE CPU/Python library translation campaign. Source pin: Einsums v1.1.5.
+The offline provider captures the versioned multi-file Rust crate and source inventory.
+All calculations must be implemented in Rust; do not delegate them back to Einsums.
+Only SymSan-generated validation inputs may enter the evidence corpus.
+Record missing API surface and fail the full-scope gate until every CPU/Python contract is validated.

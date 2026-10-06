@@ -1,0 +1,9 @@
+schema_version: "1.0"
+decision_kind: target-selection
+decision_id: replace-with-decision-id
+target: replace-with-candidate-id
+status: DRAFT
+approved_by: ""
+approved_at: ""
+rationale: ""
+evidence: []

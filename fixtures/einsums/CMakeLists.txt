@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.25.2)
+project(sage_einsums_harness LANGUAGES C CXX)
+find_package(Einsums REQUIRED CONFIG)
+add_executable(einsums-reference driver.cpp)
+target_link_libraries(einsums-reference PRIVATE Einsums::Einsums)
+target_compile_features(einsums-reference PRIVATE cxx_std_20)

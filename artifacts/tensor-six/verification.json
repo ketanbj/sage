@@ -1,0 +1,45 @@
+{
+  "status": "BOUNDED_SIX_OPERATIONS_PROVED_AND_CONNECTED",
+  "publication": "Root-relative summary paths; raw manifests remain unchanged under runs/",
+  "languages": {
+    "rust": {
+      "status": "BOUNDED_TENSOR_API_PROVED",
+      "proof_bundle": "runs/20261006-repository-rust-six",
+      "manifest_sha256": "04ff1507e1cdcc32dc8a49e399c78a4bd1ca6b099a61db206656cf5e4a6336a0",
+      "published_manifest_sha256": "5ed5980a96ab6fe2da619c1a673639231ffa808332e7dca9f03b6e929837b0e1",
+      "method_obligations": 144,
+      "fault_controls": 6,
+      "native_fault_replays": 6,
+      "python_exact_bit_checks": 864,
+      "json_ffi_exact_bit_checks": 864
+    },
+    "cpp20": {
+      "status": "BOUNDED_TENSOR_API_PROVED",
+      "proof_bundle": "runs/20261006-repository-cpp20-six",
+      "manifest_sha256": "6b9ef049e3ded782334ef22d7e2fb9164e6b7507154076e2044c9fb338acdc22",
+      "published_manifest_sha256": "c62670d9492e8926b99274af6c5342ce20089b2782d7b684ae557ea519d959d7",
+      "method_obligations": 144,
+      "fault_controls": 6,
+      "native_fault_replays": 6,
+      "python_exact_bit_checks": 864,
+      "json_ffi_exact_bit_checks": 864
+    }
+  },
+  "operations": [
+    "copy",
+    "add",
+    "multiply",
+    "transpose",
+    "matmul",
+    "scale"
+  ],
+  "domain": "Owned rank-two float64, dimensions 1..4, signed-byte values/scalar /8",
+  "proof_kind": "Ordered expressions with trusted compiler, arithmetic and memory models",
+  "api_connection": "Production routing with native replay; adapters outside model checking",
+  "exclusions": [
+    "General sizes/dtypes/Array fallback",
+    "Upstream BLAS and full public dispatch",
+    "JSON/FFI/Python lifetime and error semantics",
+    "Whole-library equivalence"
+  ]
+}

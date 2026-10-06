@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sage-equivalence.local/schemas/target-candidate-1.0.json",
+  "title": "SAGE target candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_id", "display_name", "description", "state", "assessment"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "display_name": {"type": "string", "minLength": 1},
+    "description": {"type": "string", "minLength": 1},
+    "state": {
+      "enum": ["PROPOSED", "UNDER_ASSESSMENT", "FEASIBLE", "SELECTED", "DEFERRED", "PILOT_COMPLETE"]
+    },
+    "assessment": {
+      "type": "object",
+      "required": [
+        "scientific_value", "proposed_translation_unit", "languages", "build_complexity", "tests",
+        "reference_implementations", "numerical_equivalence_requirements", "symsan_compatibility",
+        "developer_availability", "risks", "evidence", "confidence", "open_pi_questions"
+      ]
+    }
+  }
+}

@@ -1,0 +1,77 @@
+schema_version: "1.0"
+candidate_id: einsums
+display_name: Einsums
+description: Einsums CPU/Python translations in Rust and C++20 with bounded Tensor proofs and public API checks.
+state: UNDER_ASSESSMENT
+assessment:
+  scientific_value: >-
+    Potential value for Psi4 tensor-algebra development and for testing whether SAGE can preserve
+    numerical, layout, backend, and Python-binding behavior across a complete scientific library;
+    scientific priority and acceptance value still require human confirmation.
+  proposed_translation_unit: >-
+    The complete pinned Einsums v1.1.5 source library: its public C++20 library modules, CPU modules and
+    Python bindings, build and install interfaces, and upstream tests. HIP/GPU backends are excluded
+    from the requested implementation scope.
+  languages:
+    - C++20
+    - Python and pybind11 bindings
+    - Rust for the independent multi-file CPU implementation and Python C ABI.
+    - Modern C++20 for the independent CPU implementation and Python C ABI.
+  build_complexity: >-
+    High: CMake 3.25.2+, BLAS/LAPACK, HDF5, fetched C++ dependencies, optional FFT, HIP, GPU
+    transpose, backtrace, and Python-extension integrations; Psi4 integration has required
+    dependency-version, linker, and compiler-flag workarounds. A clean Ubuntu 24.04 baseline also
+    required pybind11 2.13.6 rather than the distribution package, SciPy 1.16.1 for the test oracle,
+    and both single- and double-precision FFTW runtime libraries.
+  tests:
+    - Upstream C++ test suite built with Catch2.
+    - Upstream Python test suite for pyeinsums.
+    - Psi4 dummy-Einsums and pyeinsums integration tests.
+    - Cross-backend, layout, dtype, error-path, and downstream Psi4 regression coverage remain to be designed.
+    - A 2026-09-03 CPU baseline built all 307 configured targets and passed all 206 CTest tests on Linux arm64.
+    - The best Python baseline passed 723 cases, skipped 137 GPU cases, and left two unstable complex geev and QR view comparisons failing.
+  reference_implementations:
+    - Pinned upstream Einsums v1.1.5 at commit 22a115978041e905461b24d9ca2a17bfcce01f32.
+    - BLAS/LAPACK backend results and independent NumPy/SciPy-style oracles require operation-by-operation definition.
+  numerical_equivalence_requirements:
+    - Preserve public tensor shapes, strides, index ordering, storage-layout interpretation, and dtype behavior.
+    - Preserve contraction, permutation, decomposition, FFT, and linear-algebra results under operation-specific tolerances.
+    - Compare eigenvectors modulo sign or complex phase and compare invariant subspaces for degenerate eigenvalues.
+    - Preserve row-major API semantics for syev, heev, geev, and gesv rather than encoding a known column-major defect as desired behavior.
+    - Distinguish CPU, BLAS-vendor, threaded, and accelerator nondeterminism from semantic discrepancies.
+    - Preserve documented exceptions, invalid-input handling, and Python/C++ ownership behavior.
+  symsan_compatibility: >-
+    Unproven for the complete library. CPU C++ entry points may be instrumentable, but templates,
+    external BLAS/LAPACK and HDF5 calls, Python extension boundaries, threads, and GPU paths require
+    separate feasibility experiments; accelerator execution is outside SymSan's current path.
+  developer_availability: []
+  risks:
+    - Whole-library translation is substantially larger than SAGE's demonstrated bounded-kernel workflow.
+    - The upstream project is actively considering a version-2 architectural restructuring, creating scope and API churn.
+    - Backend-dependent floating-point order, threading, GPU behavior, and external-library calls complicate equivalence.
+    - Upstream issue 236 documents a current row-major versus column-major semantic defect in linear-algebra wrappers.
+    - Current dependency restrictions and incomplete Windows Python testing increase portability risk.
+    - The v1.1.5 tag builds artifacts reporting version 1.1.3, so release identity needs an explicit policy.
+    - Upstream Python tests do not pin compatible pybind11, NumPy, or SciPy versions and compare some non-unique eigensystem and factorization results elementwise.
+    - Both ports implement 90 core CPU/Python exports and 16 helpers; exact whole-library compatibility remains incomplete.
+    - Six-operation proofs cover a bounded float64 domain; general shapes/dtypes, complete adapters and upstream BLAS remain outside the theorem.
+  evidence:
+    - docs/einsums-library.md
+    - docs/einsums-tensors.md
+    - docs/tensor-six-proof.md
+    - artifacts/tensor-six/report.md
+    - docs/einsums-candidate.md
+    - https://github.com/Einsums/Einsums/tree/22a115978041e905461b24d9ca2a17bfcce01f32
+    - https://github.com/psi4/psi4/pull/3050
+    - https://github.com/psi4/psi4/pull/3350
+    - https://github.com/Einsums/Einsums/issues/236
+    - https://github.com/Einsums/Einsums/issues/251
+    - https://github.com/Einsums/Einsums/issues/284
+    - https://github.com/Einsums/Einsums/issues/295
+    - https://github.com/Einsums/Einsums/issues/302
+  confidence: BOUNDED_PROOFS_AND_CPU_TRANSLATIONS_IMPLEMENTED
+  open_pi_questions:
+    - Should the reference preserve known upstream defects for compatibility or implement intended semantics and record the divergence?
+    - Which CPU, operating-system, BLAS/LAPACK, Python, and accelerator combinations are required for acceptance?
+    - Who can define scientific tolerances and review discrepancies across tensor and linear-algebra operations?
+    - What evidence would justify moving this candidate from UNDER_ASSESSMENT to FEASIBLE?

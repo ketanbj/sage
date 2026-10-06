@@ -1,0 +1,8 @@
+schema_version: "1.0"
+record_kind: target-recommendation
+recommendation_id: replace-with-recommendation-id
+candidate_id: replace-with-candidate-id
+status: DRAFT
+rationale: ""
+evidence: []
+authored_by: ""

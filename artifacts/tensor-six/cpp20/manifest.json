@@ -1,0 +1,2402 @@
+{
+  "schema_version": "sage-tensor-expression-proof-1.0",
+  "target": "einsums",
+  "status": "BOUNDED_TENSOR_API_PROVED",
+  "scope": "Public Tensor constructor, six methods, shape, strides/indexing and ownership",
+  "operations": [
+    "copy",
+    "add",
+    "multiply",
+    "transpose",
+    "matmul",
+    "scale"
+  ],
+  "shapes": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      4,
+      4
+    ]
+  ],
+  "assumptions": [
+    "Rank-two contiguous owned tensors, each dimension 1..4; successful allocation.",
+    "Each leaf represents an arbitrary independent input, not a sampled value.",
+    "Arithmetic means deterministic binary64 + and *, with +0 initialization.",
+    "For cross-language and upstream claims, inputs/scalar are signed bytes /8.",
+    "Round-to-nearest, no fast-math, reassociation or fused multiply-add.",
+    "Trusted Kani 0.68.0/CBMC 6.11.0, Clang 18 and standard-library memory models.",
+    "Injective base-64 prefix-tree encoding (at most 17 tokens /102 bits)."
+  ],
+  "exclusions": [
+    "External upstream BLAS, public Einsums planner/dispatch/SIMD/OpenMP.",
+    "General Array fallback, other sizes/ranks/dtypes, aliasing and invalid inputs.",
+    "JSON/FFI/Python parsing and serialization are replay-tested, not model-checked.",
+    "NaN payloads, floating-point environment changes, allocation/lifetime failures.",
+    "The arithmetic interpretation and compiler are trusted, not verified toolchains."
+  ],
+  "source_commit": "22a115978041e905461b24d9ca2a17bfcce01f32",
+  "claim": "All 144 public Tensor obligations preserve the exact ordered expression specified for the six operations, including shape and unchanged inputs. Interpreting those expressions as binary64 establishes bounded functional equivalence under the recorded assumptions. Public JSON/FFI/Python paths route this domain to these methods; the adapters require native replay.",
+  "target_language": "cpp20",
+  "profile": "tensor-six",
+  "obligations": [
+    "copy_1x1",
+    "copy_1x2",
+    "copy_1x3",
+    "copy_1x4",
+    "copy_2x1",
+    "copy_2x2",
+    "copy_2x3",
+    "copy_2x4",
+    "copy_3x1",
+    "copy_3x2",
+    "copy_3x3",
+    "copy_3x4",
+    "copy_4x1",
+    "copy_4x2",
+    "copy_4x3",
+    "copy_4x4",
+    "add_1x1",
+    "add_1x2",
+    "add_1x3",
+    "add_1x4",
+    "add_2x1",
+    "add_2x2",
+    "add_2x3",
+    "add_2x4",
+    "add_3x1",
+    "add_3x2",
+    "add_3x3",
+    "add_3x4",
+    "add_4x1",
+    "add_4x2",
+    "add_4x3",
+    "add_4x4",
+    "multiply_1x1",
+    "multiply_1x2",
+    "multiply_1x3",
+    "multiply_1x4",
+    "multiply_2x1",
+    "multiply_2x2",
+    "multiply_2x3",
+    "multiply_2x4",
+    "multiply_3x1",
+    "multiply_3x2",
+    "multiply_3x3",
+    "multiply_3x4",
+    "multiply_4x1",
+    "multiply_4x2",
+    "multiply_4x3",
+    "multiply_4x4",
+    "transpose_1x1",
+    "transpose_1x2",
+    "transpose_1x3",
+    "transpose_1x4",
+    "transpose_2x1",
+    "transpose_2x2",
+    "transpose_2x3",
+    "transpose_2x4",
+    "transpose_3x1",
+    "transpose_3x2",
+    "transpose_3x3",
+    "transpose_3x4",
+    "transpose_4x1",
+    "transpose_4x2",
+    "transpose_4x3",
+    "transpose_4x4",
+    "matmul_1x1x1",
+    "matmul_1x1x2",
+    "matmul_1x1x3",
+    "matmul_1x1x4",
+    "matmul_1x2x1",
+    "matmul_1x2x2",
+    "matmul_1x2x3",
+    "matmul_1x2x4",
+    "matmul_1x3x1",
+    "matmul_1x3x2",
+    "matmul_1x3x3",
+    "matmul_1x3x4",
+    "matmul_1x4x1",
+    "matmul_1x4x2",
+    "matmul_1x4x3",
+    "matmul_1x4x4",
+    "matmul_2x1x1",
+    "matmul_2x1x2",
+    "matmul_2x1x3",
+    "matmul_2x1x4",
+    "matmul_2x2x1",
+    "matmul_2x2x2",
+    "matmul_2x2x3",
+    "matmul_2x2x4",
+    "matmul_2x3x1",
+    "matmul_2x3x2",
+    "matmul_2x3x3",
+    "matmul_2x3x4",
+    "matmul_2x4x1",
+    "matmul_2x4x2",
+    "matmul_2x4x3",
+    "matmul_2x4x4",
+    "matmul_3x1x1",
+    "matmul_3x1x2",
+    "matmul_3x1x3",
+    "matmul_3x1x4",
+    "matmul_3x2x1",
+    "matmul_3x2x2",
+    "matmul_3x2x3",
+    "matmul_3x2x4",
+    "matmul_3x3x1",
+    "matmul_3x3x2",
+    "matmul_3x3x3",
+    "matmul_3x3x4",
+    "matmul_3x4x1",
+    "matmul_3x4x2",
+    "matmul_3x4x3",
+    "matmul_3x4x4",
+    "matmul_4x1x1",
+    "matmul_4x1x2",
+    "matmul_4x1x3",
+    "matmul_4x1x4",
+    "matmul_4x2x1",
+    "matmul_4x2x2",
+    "matmul_4x2x3",
+    "matmul_4x2x4",
+    "matmul_4x3x1",
+    "matmul_4x3x2",
+    "matmul_4x3x3",
+    "matmul_4x3x4",
+    "matmul_4x4x1",
+    "matmul_4x4x2",
+    "matmul_4x4x3",
+    "matmul_4x4x4",
+    "scale_1x1",
+    "scale_1x2",
+    "scale_1x3",
+    "scale_1x4",
+    "scale_2x1",
+    "scale_2x2",
+    "scale_2x3",
+    "scale_2x4",
+    "scale_3x1",
+    "scale_3x2",
+    "scale_3x3",
+    "scale_3x4",
+    "scale_4x1",
+    "scale_4x2",
+    "scale_4x3",
+    "scale_4x4"
+  ],
+  "public_api_bindings": {
+    "ports/einsums-rs/src/api/bounded_tensor.rs": "306008724194429610f0098cd040f5da2e7edd3305a99e08d17adfd4cec57a48",
+    "ports/einsums-rs/src/api/mod.rs": "1ff2a2d3cb8205e7bd06f61b55f109aae97604bed293e67bdcd80d4a05a2750b",
+    "ports/einsums-rs/src/protocol.rs": "68db4fcdf8dd85126c89ac9bb162d0975be5dab69edbd83fbba426a0fbab840c",
+    "ports/einsums-cpp/api/bounded_tensor.hpp": "a1a831da51cb0940f1cdfe543f9482e2a6fb76a63b28b063019e4b6e62799dc5",
+    "ports/einsums-cpp/api/execute.cpp": "e77fa933de7c56083120055624e58e00267bd81393e6370c7114699b48aa1459",
+    "ports/einsums-cpp/driver.cpp": "9a45fa7c6e82ec5a8abe88b66f9aa88d76acbb73832aa408fffe9c1d0d5236dc",
+    "ports/einsums-cpp/library_driver.cpp": "fe25080196d179b43a825a7c59ea65e262600888e450624f868a672231d732d2"
+  },
+  "source_hashes": {
+    "tensor.hpp": "b84324dbcf963b64fbfe6f11eefd1ec2ea93eca4fbf9af49603047f527c5ef7b",
+    "expression.hpp": "f545ba29b6639c267ae80948ffd52288c0e88ce129ef3ed3f0245d54e799775b",
+    "tensor_source.rs": "eb79bd57a92ef2e4dc9aef5f5563d90fae602e90d02912df640db8023ad82dfd",
+    "kernels.hpp": "8091a7930e353894fb63465a892a7dda28a4633c13ab516c54c3e82bb6f508cd",
+    "expression.rs": "12cf9a08c281ca0569fcb6736b437c37d54ac876d8239ecc4140e7d053d49c42",
+    "proof_runner.py": "033a78fe20b9c592e316f17def63f46e36ab113f166314dcbdb18ffc265971a8",
+    "proof_support.py": "8096cd64fe1d53031d13ae8186b21707ff291c24a8b5a469f9c99acfba6610ea",
+    "compat.hpp": "ca0aeb8914efd39fe898b79a0d9e0f128615488ba96b56268f79e9213cb4d471",
+    "tensor.rs": "ca9472079ae898b4ea5eead0f4f563c97b265bdf07a51aeda65ad31d428ea712"
+  },
+  "tools": {
+    "kani": "0.68.0",
+    "cbmc": "6.11.0",
+    "compiler_image": "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87"
+  },
+  "public_method_certificate": {
+    "identical_optimized_ir": true,
+    "entries": 144,
+    "normalization": "Remove only ModuleID and source_filename lines.",
+    "modern_ir_sha256": "a502bc7ac79b9b1ca086091ae7ad22476a215a5cf68336378c8d1d5d11d10e57",
+    "lowered_ir_sha256": "a502bc7ac79b9b1ca086091ae7ad22476a215a5cf68336378c8d1d5d11d10e57",
+    "flags": "-fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm"
+  },
+  "expression_lowering_certificate": {
+    "identical_optimized_ir": true,
+    "entries": 144,
+    "modern_ir_sha256": "281ee25f5d4458573c66c1a62ce3fb41caa5cae896f82838be1f12a7456dfda0",
+    "lowered_ir_sha256": "281ee25f5d4458573c66c1a62ce3fb41caa5cae896f82838be1f12a7456dfda0",
+    "normalization": "Remove only ModuleID and source_filename lines.",
+    "flags": "-fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm"
+  },
+  "cpp_checks": [
+    {
+      "obligation": "copy_1x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "copy_1x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_1x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_1x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_2x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "copy_2x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_2x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_2x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_3x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "copy_3x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_3x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_3x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_4x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "copy_4x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_4x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "copy_4x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_1x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "add_1x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_1x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_1x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_2x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "add_2x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_2x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_2x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_3x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "add_3x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_3x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_3x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_4x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "add_4x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_4x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "add_4x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_1x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_1x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_1x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_1x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_2x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_2x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_2x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_2x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_3x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_3x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_3x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_3x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_4x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_4x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_4x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "multiply_4x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_1x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_1x2",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_1x3",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_1x4",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_2x1",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_2x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_2x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_2x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_3x1",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_3x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_3x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_3x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_4x1",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_4x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_4x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "transpose_4x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x1x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x1x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x1x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x1x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x2x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x2x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x2x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x2x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x3x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x3x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x3x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x3x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x4x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x4x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x4x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_1x4x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x1x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x1x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x1x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x1x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x2x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x2x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x2x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x2x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x3x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x3x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x3x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x3x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x4x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x4x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x4x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_2x4x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x1x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x1x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x1x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x1x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x2x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x2x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x2x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x2x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x3x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x3x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x3x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x3x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x4x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x4x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x4x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_3x4x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x1x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x1x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x1x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x1x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x2x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x2x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x2x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x2x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x3x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x3x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x3x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x3x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x4x1",
+      "status": "PROVED",
+      "property_count": 498,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x4x2",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x4x3",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "matmul_4x4x4",
+      "status": "PROVED",
+      "property_count": 500,
+      "failures": []
+    },
+    {
+      "obligation": "scale_1x1",
+      "status": "PROVED",
+      "property_count": 504,
+      "failures": []
+    },
+    {
+      "obligation": "scale_1x2",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_1x3",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_1x4",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_2x1",
+      "status": "PROVED",
+      "property_count": 504,
+      "failures": []
+    },
+    {
+      "obligation": "scale_2x2",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_2x3",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_2x4",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_3x1",
+      "status": "PROVED",
+      "property_count": 504,
+      "failures": []
+    },
+    {
+      "obligation": "scale_3x2",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_3x3",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_3x4",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_4x1",
+      "status": "PROVED",
+      "property_count": 504,
+      "failures": []
+    },
+    {
+      "obligation": "scale_4x2",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_4x3",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    },
+    {
+      "obligation": "scale_4x4",
+      "status": "PROVED",
+      "property_count": 506,
+      "failures": []
+    }
+  ],
+  "reused_method_checks": {
+    "bundle": "runs/20261006-tensor-six-cpp20-certified",
+    "manifest_sha256": "ce3e59049e0aeada4a0bf9d3c61f391dc2957d6b3295cea95a7dc8493fc99ee0",
+    "identical_proof_input_hashes": {
+      "tensor.hpp": "b84324dbcf963b64fbfe6f11eefd1ec2ea93eca4fbf9af49603047f527c5ef7b",
+      "kernels.hpp": "8091a7930e353894fb63465a892a7dda28a4633c13ab516c54c3e82bb6f508cd",
+      "expression.hpp": "f545ba29b6639c267ae80948ffd52288c0e88ce129ef3ed3f0245d54e799775b",
+      "tensor-lowered.hpp": "2c080e911f4f29e2db71f41869712c7452465413054a1d476921de20d1583043",
+      "compat.hpp": "6a827370c792bf161e3e0c3e347529bdb492911ff0dec52f5314100561c65496",
+      "copy_1x1.cpp": "c86e4e9f12e3f670c674709156039e75732bd95a1c99712534f267c112632019",
+      "copy_1x2.cpp": "e37a1657b746b48c09b954d59c59e5382bf327932da07ab1f7273e8570c0c9e2",
+      "copy_1x3.cpp": "da202a9059a0477409c5644e46f66b169e4610225b87f14de6e183a3017f4151",
+      "copy_1x4.cpp": "be31a2824b853e21f6f7500b0881299437f1eba583f294df1dc88252a0e0626e",
+      "copy_2x1.cpp": "9a3c18a55056adf376161b4f8e236fa959a8551a6830aad5b1c1cdacc5ad2ae6",
+      "copy_2x2.cpp": "c403dcaeac0e6baf474c0512c2d996665eb9bfc0b172295c38185713064fbaa2",
+      "copy_2x3.cpp": "aec90dbe99006b44b9c0056928b39d635391fa1fbf6ec96862d70d294f7f8010",
+      "copy_2x4.cpp": "55541d4054ca306b20d11da636908722400e9a1fe4b4931a0eb4d4efb2f27253",
+      "copy_3x1.cpp": "7fb3a0efdfc3d386da33d0c1bbb78cf7db2e32dc557d0b70ad22eb9098867dfd",
+      "copy_3x2.cpp": "0ea94aad58c4ecef82bfe74995db565996ad87114e703d969861d140087cc7c1",
+      "copy_3x3.cpp": "25da0e852784cb54aa6142c3c73b63fca1ef81c556b5cbc17bc3649bbf6cecd8",
+      "copy_3x4.cpp": "66a8becc275e1fefe01d4d7a02841d11ca022a728e073dc909482e2edb925d9a",
+      "copy_4x1.cpp": "c6843146324b9095844c420ba94311f119f98095e56b6b49272ace28ba7feb66",
+      "copy_4x2.cpp": "cde17b90c93b32d2387edebcfaab12bc3b646efdae74fc9fd97a3cc358073405",
+      "copy_4x3.cpp": "71691816511237e38d9dceea6deb54bef64d3535ac847e731f1558fc8571c1ac",
+      "copy_4x4.cpp": "173a8f31f66fce6700774c6df1528824316eb999fb70d0adc333ea00f39d1e7c",
+      "add_1x1.cpp": "5ae8ad82342fb641fe84eeb14aa1f64c766afd123b134a79cb480212708801fc",
+      "add_1x2.cpp": "9a25384b6d20b4d2e355f53106ac9fe26ffc40e52e0eeeef5678557a33227694",
+      "add_1x3.cpp": "f0de7ffd112bfefa41ee70a13b5f5c04c508eb1ce8988ea650db6dbcf972bc96",
+      "add_1x4.cpp": "81194e6d23578e9c46d10b786272bcbbcff79e6139673f574a28f7e1486c5d08",
+      "add_2x1.cpp": "77973aaee3981fe14bacce83c137f6d4b4036f2478829351d514857ddedce5ad",
+      "add_2x2.cpp": "f0788b4da7e0c33c61f6f0c87877e177c0a4f94739ada0f6c2c91242821ae421",
+      "add_2x3.cpp": "3ec0bac04fcbeb138a5ac8855950c0f7ad6be198b04e649aa8b2d5a7135efc34",
+      "add_2x4.cpp": "79d7d00ceaf93d94203167b6bae9316acc256136eec3a1909cb3526e8702b89f",
+      "add_3x1.cpp": "a1a0a6f86b7d30d73bee1e112107d8d9e313bddc6eff1c44d3135e6c79ff210d",
+      "add_3x2.cpp": "0e443190fb1f884ac1e2bcbd5a66fcae6d3d8993afa104f202a349bbf0f4e120",
+      "add_3x3.cpp": "2f872847d11daa64882d4a990be057d3e4f97809598f62c92724769a829c2521",
+      "add_3x4.cpp": "15c856772da2c97996d00a678139c98b77ada7d2e53aae058f778fdea2d9af8b",
+      "add_4x1.cpp": "01b88fa4419b14f509253c1723e275417f13ae6d04b63fed5a3fe3a641ebe20b",
+      "add_4x2.cpp": "3e19322bbb94eb1f29989b5286c7ab636f8b90d9cc2d12b007218358e221b711",
+      "add_4x3.cpp": "d9d40497a897606c0ffcfaae438c24337c20297fb937fb1565954d8bde7290f9",
+      "add_4x4.cpp": "0487b86f181bbac3f53c75b47cb8b130aebacec7415a0303081461db67aa24f1",
+      "multiply_1x1.cpp": "7a8e32a2eb82ca2c4c9ba4d75eb68662dc933d3fb3ffcdf57010245e4233ca25",
+      "multiply_1x2.cpp": "0c6f972dc5ba0b6adb257adf3a75abc565e146efe8b64e8b42225115238c363a",
+      "multiply_1x3.cpp": "1afbec06bac8050296b382006f85b18383ddd78467457f52ab8ea51ddf2e2ab2",
+      "multiply_1x4.cpp": "984ac890f6f52df417bfb509ac59e360aaf1ec70386ff290dee92415b5353fa7",
+      "multiply_2x1.cpp": "66554cd47f0c54069266caf301c5f6708ff8b2c9104b86bfd0418d304077369c",
+      "multiply_2x2.cpp": "f4ab6ba5730ddb2cb838de890282879282e8513aedc5b14cab3d7b174ccc5a8f",
+      "multiply_2x3.cpp": "a8c6b187a832697729c2727518896d9c72643a20511e5413958707695662e4ef",
+      "multiply_2x4.cpp": "21de6324739bea6ece5406b9dd1457dfa8eaf5fe2e6e8c9005051e5d241b4618",
+      "multiply_3x1.cpp": "02fb75e8966a2222278ef2b4c582837993b0de537a27eb260f729d31d7e540a9",
+      "multiply_3x2.cpp": "57caf304a8557dd1eee93fa04d764c8bb6d86ec5d0b9220541489bf71f76011f",
+      "multiply_3x3.cpp": "fb1f4bae5ee5de79239a85d8446e2f9362cc04a686b7fa75cfc51aa9b9bb5686",
+      "multiply_3x4.cpp": "ea8674e728e8e1edd10e4feac190fe8e96e155e85b1bb394b8b37621eb2fa1a3",
+      "multiply_4x1.cpp": "1b91bbbb82fd4cdb5df1ccbb231ca69bce1275d9c4ec9661320bd7771edb8f0a",
+      "multiply_4x2.cpp": "653f6055eb5a8e9edca95cafb0bf726b5ff3967b4d847dde63e1053efae01751",
+      "multiply_4x3.cpp": "19e02be3bed1fbd8d4b8a24610d756580a6e5bef051733a21ba6e378510d69d5",
+      "multiply_4x4.cpp": "95b2d8afc7f7417d996692f230f74d1a56b6f7e98df509d5dd49c3d5e551572a",
+      "transpose_1x1.cpp": "3c5e4d5f159902f701c8565e059b2cdb2cae7ac678b708021a778d0a8a4eae97",
+      "transpose_1x2.cpp": "689cef9d22b4c08c649a25d94e9476a3a9f9cfc3961923214636eb2811a64fbb",
+      "transpose_1x3.cpp": "db475d100516baf8095d78e917bdcd5a86cad8bd21d4b0b840f1a16642510408",
+      "transpose_1x4.cpp": "b97cf02a1c11e87cb3ede464eea5ef656adf6ff577cb372d7247fc83655aa356",
+      "transpose_2x1.cpp": "be2e820c0be659138c1aa9dbeb02a40f4b49964c719e0c7bdd4867e27191e5fc",
+      "transpose_2x2.cpp": "eb8f85ec02277e3a0b3ec2a4c497db90185738c91953d74520986c89a7806667",
+      "transpose_2x3.cpp": "5777792c5c4de2e853af6a7482597ac8b62b1b321403807ba90b54e70ecff024",
+      "transpose_2x4.cpp": "2df780d928c1a1521347bfb91ec074a2a7aa9ad71b9f3e744f8437251ad3e9b8",
+      "transpose_3x1.cpp": "fce31de1ec7df6131605edf9c175ddb140db30381ec7eb22d2c6a246f66ec931",
+      "transpose_3x2.cpp": "433849b52d75ad91b23f064c38ff42be924281328005c0195e1b8aef68f886ec",
+      "transpose_3x3.cpp": "3b43d90eafe6f688ceebfd2430045db64de0c0e711a1f90e860c5e547d1e4805",
+      "transpose_3x4.cpp": "f28ac0b8858ac75e161d64e67fe5e8509ee3827f38169fe5540fec7e6d2958de",
+      "transpose_4x1.cpp": "d43d3de5348a99a70a1c41dec8a9960e670578c120e78ba5b5f029d0f3374fd0",
+      "transpose_4x2.cpp": "90a47fa00d2d8e1e692a6427588d976c70004e6e175c432dd89388b5541dfe6a",
+      "transpose_4x3.cpp": "789fc2dc29d6a9377e7158394cc4957c166fa14c3dc27b3fabfb1ea20acf9eae",
+      "transpose_4x4.cpp": "b132fad7a559d76935367c23112d5ce2a0ac632df5b8fbf5ce3bc2c7d4a87d9c",
+      "matmul_1x1x1.cpp": "b5a81c16b4cf7689355f78efe73589fdfd74e802e676b17bc9b3812e93ed0452",
+      "matmul_1x1x2.cpp": "64502a14ddb7a257f08c8f1c23d21f3eb35acc7e13255c7730b05491ddbead24",
+      "matmul_1x1x3.cpp": "b4e9586c6bbca3ee194cfb7d8c1247406de6335979718d0568630cceecddfc2c",
+      "matmul_1x1x4.cpp": "34f305439c2758164b68f373cdea0bdf18a68cba9ede2168abb8ca7fc938b15e",
+      "matmul_1x2x1.cpp": "09ace7709f50a6e5b09d0d96b60259131988e4563859237a0bf7a8d7c7ee8920",
+      "matmul_1x2x2.cpp": "7c684c098e9014ff337d98b83cf4c663277ef3487f84d9fbbb0ed59901367cac",
+      "matmul_1x2x3.cpp": "d75d249fe139c810b63d93c5c5c14883141eb9439f613050ca84ca9f75768da3",
+      "matmul_1x2x4.cpp": "6d423d7c24982d071d2d91e9f82e72005c2f54dfa8d715585b55446a92b41c1b",
+      "matmul_1x3x1.cpp": "ed25a0b697b9e27c1ad3b4ee04a5b4f03519bb9a8f9acb3b57ec1cfa6c78407b",
+      "matmul_1x3x2.cpp": "b197d97914c3c3566783debc1e41f5230d81cb6242e5bb87fa0178072247b58b",
+      "matmul_1x3x3.cpp": "a96d6f52b2101224a3473d657f38539c8b9bed9aee7eaf0fcd61e474580d45fa",
+      "matmul_1x3x4.cpp": "4030c0e7b881f4eaf62cd449b1edc0630ebcd729b9a8c777f3a29d58dc74ee51",
+      "matmul_1x4x1.cpp": "acc5924fe3b91f1d9285b9c075df91fab036091b0857f911071ce5929155fa60",
+      "matmul_1x4x2.cpp": "3c4c57ba95c9f5bc4c1588c0e401f839cbbead75ae08816fd157778edd6e8cd6",
+      "matmul_1x4x3.cpp": "fbd23578056237a1df73ecd7da8793a9fd3a2b9976e1c13cb4a463377fead550",
+      "matmul_1x4x4.cpp": "c341cca2581fe2450e5ec65163f1dbddc85da96e44b9e01587e0c6980bb6e7b7",
+      "matmul_2x1x1.cpp": "d618244aefa2b70e5bb95d742fe9072f2997949dc459496c680d404be68b6402",
+      "matmul_2x1x2.cpp": "c4509c69ced2ece67291ef871fb88fbead213531e51dca0bdd885f8f09b45af6",
+      "matmul_2x1x3.cpp": "5d0e18ad0840e912b758cd5fe575124cd00ca362a4c03738a93dd483b7aa4e31",
+      "matmul_2x1x4.cpp": "771b1b29e278fbe1dcf05cc65820639fdd9334814e966d10ee8f62e7c8aa21f3",
+      "matmul_2x2x1.cpp": "0f78d7ed5859a1e441d4a839e45f9efc3f0d6e8bbb46dab0ab9daffc6f773cad",
+      "matmul_2x2x2.cpp": "eae192e971a1326741ebf219a2089e63adafd00b68be33e5ec6b2b6610188a1b",
+      "matmul_2x2x3.cpp": "6a0b3bd48c9a83d5c4a4cfb74ea65abccaa9f4eb3731d7440ecd6101f9dc0feb",
+      "matmul_2x2x4.cpp": "179104aa7f4b0180e07eb7aa397e56e000df7c30a2767c13d662a4bda6f67d7b",
+      "matmul_2x3x1.cpp": "d6a29da9add41d65d0b136d00ee3647b58e696234b487e8c381b2e09f46ce557",
+      "matmul_2x3x2.cpp": "31bafb98db3722b38931a939d9b7de75e650bbc3d65a3e8befc1d8dca8260e67",
+      "matmul_2x3x3.cpp": "d4940a2fd84d4ed29064f9b6738700d9604d8f2bba76508209e7a24e61ece110",
+      "matmul_2x3x4.cpp": "3b9faed81c61abacf54c8a00714ce9d16ba9603ec61920e510c3ffbb20ee07cf",
+      "matmul_2x4x1.cpp": "d08ea2edd53cd25216e6c02cbed0865201e785b3c80574d24818e43e67203cfe",
+      "matmul_2x4x2.cpp": "b73524fe8575263b8eab366b3adff550b9867e173aca89b2d3d0c5ef71996919",
+      "matmul_2x4x3.cpp": "ab1bef6a3c61b0269b2a96b6cb4686e0afc604cea4e236bf4d041c585e625e80",
+      "matmul_2x4x4.cpp": "b58f6a0477a50a8870794a9ac2150e57188f4be15fd0a029d0cfd662fa200a45",
+      "matmul_3x1x1.cpp": "9b5ef378b2aa9d0ebd9a5eab6242527c72c7319025481265dbef71192ee20c83",
+      "matmul_3x1x2.cpp": "35130dc344f983a9ebee95bf952cb84822ec24af509b0842e27c83b2114c0407",
+      "matmul_3x1x3.cpp": "2ab26eeac9bc349fff2292007d0fdf94ace8a9be27a11c7f9805c861ad473c6c",
+      "matmul_3x1x4.cpp": "cc368dd1c9ea549db4787890fcf0194e6b63b9dcaf34ece3b39f6a58488c0a01",
+      "matmul_3x2x1.cpp": "6915b1bd68db0d6ad77f34aba9c1ba112508159bc1e597f3bc7a2586011019fd",
+      "matmul_3x2x2.cpp": "7f0f599fc87fd959e014754372a7f77796a4e7d9d73b95a8ae6bf520d975361a",
+      "matmul_3x2x3.cpp": "728efdd17cebf73de93bb5e75dcaf2f77244208b03c1fbeda016ae11b5fcdba3",
+      "matmul_3x2x4.cpp": "79e709e3f05de10b511a0224e0f41391655d0f832ba44cfd4c47de8e6e9af899",
+      "matmul_3x3x1.cpp": "66db237bf1a264d0fe2f71a7f77a1eeed4a43d55cdaf16aef6e31e2805d2c6f3",
+      "matmul_3x3x2.cpp": "a1e9df86aea3e10ea50e279df9bd7551309a2ac82950bca3894b29ee9de54762",
+      "matmul_3x3x3.cpp": "70ae7d9ede3759ebc570800ecdeace98d6531b68bd1e600fd504684e07495254",
+      "matmul_3x3x4.cpp": "3525b173b8f3e132c7196e30225c79fddffdadb15962e38938c796c8b6214c25",
+      "matmul_3x4x1.cpp": "333312079c09da5d5a76d3eedeecd44c49adbd92ab7ba179013fa0f1eb3a0a55",
+      "matmul_3x4x2.cpp": "3ba7489f760fce882b561f7b80988a82ee95d07c10aa02fd5ee9f232f7ccb1d8",
+      "matmul_3x4x3.cpp": "040f2e346db83408502731caa263b7d73f634f1700ebc80f290a10601ab140e0",
+      "matmul_3x4x4.cpp": "7bc13b5656ab57f87d15ac38b1418543e4a4c49588cad791eba45cd522507b48",
+      "matmul_4x1x1.cpp": "0e30d4d4baf2f51d0429306744c66c86f5a1cb7adc0f2f67236dcb47e9a24ec1",
+      "matmul_4x1x2.cpp": "c7c0fea725761ab56ce262a6dd37197ae76b90b08c011d011111e09eb7b9502b",
+      "matmul_4x1x3.cpp": "c11a686938aceac71c81d353b1fc738a4d7f8b3e04212cc56693da7849ed920d",
+      "matmul_4x1x4.cpp": "fee6fa49569c5ebe4101ed599171caa6eecdc4fd57992ec497393aa73b3f4af9",
+      "matmul_4x2x1.cpp": "c3573891a55d9185fd1bdf16d471082b7cd374ce6d4ffc4642340b383c80d09c",
+      "matmul_4x2x2.cpp": "3128afbd925c503673035e79ae822f43cc124eb5530527c396ce8d6ed3377be9",
+      "matmul_4x2x3.cpp": "180c84dd8d65a795129bcf44620c227afdc626aeab19b4ea343d7f8cbc760a39",
+      "matmul_4x2x4.cpp": "c308e331fb620aad245ba75aa1c975dc974611ddf408f74c0dce54b64bd8b0d0",
+      "matmul_4x3x1.cpp": "272ba8af2f49e5b4f499621842b19aaf212189c7267b0ade4c1ff5cc76449fd7",
+      "matmul_4x3x2.cpp": "b17c85e64bc23b37e2172cb3701e8f8d50a1865b4473658266308fa3076376c7",
+      "matmul_4x3x3.cpp": "1ff41d3de51bf87030ae93c3d940577e17d4e468c46fee4b054e32e651fb44a9",
+      "matmul_4x3x4.cpp": "5e8b31186a86263367c7a757011300593b3f61fbb81844415bd047ba415b104f",
+      "matmul_4x4x1.cpp": "35038577155eaf70f1218801c9d6e017f3a6c58560bb05ea49af7fc81b6d65f9",
+      "matmul_4x4x2.cpp": "3e6b9f545f8447e4b211ee9c7b2fda21c911f1ad4f48340a6640edcd4ba1d4a4",
+      "matmul_4x4x3.cpp": "6879962223ebd5e19da41862a88eaa8570caa000bc6d2b5dba72ddccb6ac9549",
+      "matmul_4x4x4.cpp": "ef34af216b3613bf3a7ff566f15e09a4a2b497a0d491dc7c8012b63174d9f567",
+      "scale_1x1.cpp": "4128e6fc988cae1f1b1a91b824c00ea8c5865a937cc085dcfa27627cb9b346ec",
+      "scale_1x2.cpp": "91fb01203cb303c9a53178c641561805d9239fddeda5d3dc3b53d95402548ef5",
+      "scale_1x3.cpp": "e9246e20de46188c2d7263e986a32be65a072c72ab2a6e1d3c1bcbabe5e5fee4",
+      "scale_1x4.cpp": "1640b8b8398da0739cbe813efe2845b3eb114165f2ef907488796484c3e5a162",
+      "scale_2x1.cpp": "c7fbd17a5f11344413549124e0156acf49f57eb811e80c1df92b56155c9b96b5",
+      "scale_2x2.cpp": "f7029b06e66c17ba25bd555dca127ce09f7174e5d7651902393aea3bb6ae10a6",
+      "scale_2x3.cpp": "004f23068830169b522016d286b007ec66fd050e17cd63e54ebb244548bb6568",
+      "scale_2x4.cpp": "047b8d47b73b48cadb7dae37add9c41073d8a4dedf1d9b8b2c44ab82c467885a",
+      "scale_3x1.cpp": "55a142ee0fa9e457cb84973654753ac27d752c46dce0b47fda62c163ba9a1d20",
+      "scale_3x2.cpp": "ed5692f54a3ef762a46060ca6d1f4865269a980d052dd638514e1d19a5cbb2a9",
+      "scale_3x3.cpp": "3742060c3553e543b5b0e1a2d052f9e2506e5829f51949497917141ce0c7c219",
+      "scale_3x4.cpp": "3957d00b2100add228f6850cda43711d809a6d016f0c8f642377999e08a7ae13",
+      "scale_4x1.cpp": "b4db2d20d72beee59287eef8def549ade0e1956164ce4502181df4301dd4b759",
+      "scale_4x2.cpp": "21c32be0d5db5d578da29cb12786ea27fac19c5a2251350f7987a23590fa6d16",
+      "scale_4x3.cpp": "a96c150f73f5d5b3aed490d8ded4868bc94d88285f9c1b6e1310898394e2eac5",
+      "scale_4x4.cpp": "5626b1b3c3a52d3e255a13cb108b4fd41921bac92f08adf9594e50ecaab522bd"
+    },
+    "raw_log_hashes": {
+      "copy_1x1.stdout": "6e526bab598ec13885edebcfbc5f343e3524d61575ff638a3b390f101b9b8a98",
+      "copy_1x2.stdout": "a54061c8d4d9103cf657425b6e0a8b4a070adb336190f031a3cb00f67548a5f6",
+      "copy_1x3.stdout": "6d159ad72c62860487c18c74bb34c169075040866159a7c45b43781f9bd3ea8f",
+      "copy_1x4.stdout": "ea7bc0cd307bc78d7c75d256b5ff900f0dee40dbb1778854c647d09c9bf7e486",
+      "copy_2x1.stdout": "ef4818119d2556803ee963155e0e0b159cb9a22c3bcbb4a80cd8b97266bdd00b",
+      "copy_2x2.stdout": "84724a5ebb76b6aaf3f6bc1f599dc81aafa7fd18cc9a7321eebdb3c0313cde69",
+      "copy_2x3.stdout": "5ec68d96fcbe9a20d8916cc8ee91a2fd71984e4cae3956e1104f6f50a0acad1e",
+      "copy_2x4.stdout": "3cf64a028afa9da71bd3dd596c51945917272b7751a3e46d67c170d8bd2460b7",
+      "copy_3x1.stdout": "68bfc9184545a3f7120fce528bfe627e2940631803cda74d3413e8258e25c8f4",
+      "copy_3x2.stdout": "00a765329ca22be2636de5777b3c752846d74212c1c028e19318a99cb01a9362",
+      "copy_3x3.stdout": "7d91d66458a338767c41be988f9e24c98d567c913491ab1c5cee66e6c14bd5e9",
+      "copy_3x4.stdout": "00a484a35a2e915cb1f468c0dfb1a178c360eccea4bb960480848395f6937fca",
+      "copy_4x1.stdout": "985da3f87e1dd0404324ca1f44e74a821ba47ccca14c3f4c0c5235c4d4d18ca6",
+      "copy_4x2.stdout": "e48ab4797dccd400cafadff2d201aeb6679792ed8a769ab94b94594e93fe090c",
+      "copy_4x3.stdout": "f3021d0b2012c7ba0fb0970ce70dda122f2edd15fdd82c0deb71ce0dc264b0e9",
+      "copy_4x4.stdout": "a00d71eef47ea84c27431452a091b4a737538d19e765865ddbe7492e58492e9d",
+      "add_1x1.stdout": "a83bc5fb453e5f190231ebbe6b7bed122f9270ccf53eb6048001acafc86ef659",
+      "add_1x2.stdout": "d4c1a7e567e6d16c76a0d6fde903f6d5e37a6b75e804e9006f93fc16c2b8c8b1",
+      "add_1x3.stdout": "5577bdfbeb1aff6f0cbe8c95a4679351f83378da377222f418f04af3b4860731",
+      "add_1x4.stdout": "7dc7e1bf68405396e5adc41b7bbf9ae73090eae040e5979a6d14bfde7efcce8b",
+      "add_2x1.stdout": "a3f4c0241e0a226b31692ee965bbd5e7442862868ad326700bf456c672e3df6d",
+      "add_2x2.stdout": "d6d2cb5ee1bb60fda559315a32fda49f0f9f70c7154cfd994a5e549f7b42f452",
+      "add_2x3.stdout": "b5d1341b99b1e3b56e039c4d2807274c70c85a5b9cfdb38646f5d506f00db416",
+      "add_2x4.stdout": "c8c62e4acdd42b8d0a385acc8e3829435928da38f5c4b78a90048e7bd0dea39b",
+      "add_3x1.stdout": "beaa59ecbb40fee320595e12509b12e6420b72fc65366152870e62905df79e1b",
+      "add_3x2.stdout": "7226d0cda31c20e24bdef5e0daba607fa5e319a2133f5ac8801b81b2057231cd",
+      "add_3x3.stdout": "c72b9f209e179a5008cb2e85c8360a278ee65b90814e2030e3f56bab0e61d935",
+      "add_3x4.stdout": "5ac760c49d96a9e605f68441b21b8d1f2d603da1c91360d81633c08d5cb6fac3",
+      "add_4x1.stdout": "42645be3c50334050406a42f08c5f3aeff17afe1ef91119a80d7e6e3573a7343",
+      "add_4x2.stdout": "49329ae6c56d041d1d6d6dfe1be103b39fbbc4006caa546e29e9a8763e1dc782",
+      "add_4x3.stdout": "f50a1cee9cc60101d032885752616849371c686a2a1ebe2d35809b3c51c5a1fe",
+      "add_4x4.stdout": "d15bb6770011d107b0e19988c212a3e958bd3c4733cc04312b6e94750dc99062",
+      "multiply_1x1.stdout": "62587c502a783653132b126c503c5c7fbf5e882220bcfa160bea44be30fb949a",
+      "multiply_1x2.stdout": "07dd5b012d47ee36d797aea5328e0de2da49c4ab3887bcd9df3a5ab6085a8068",
+      "multiply_1x3.stdout": "50af9e39c80134f3172157b266d2a9894d557ae304b94a01d5d03b704a0cfe72",
+      "multiply_1x4.stdout": "4e61bc7ac75d2ed3734a46b6e06ae1e2df541c7764af1f436142dc62f4b9f0c0",
+      "multiply_2x1.stdout": "a59c0f97742f9689152a8c19db26efbb2c73232bc4c39362d3e1bcc22db693fa",
+      "multiply_2x2.stdout": "a44e97ddf2f26ae6f91c1288da7606e990bfc74a2fa97be63d6425ea0ef46bba",
+      "multiply_2x3.stdout": "ad9b6bb576ce06095ef68742016dcd8cc33ac9cce7c8c90238c68fd9f0b2f3d7",
+      "multiply_2x4.stdout": "91183c21f1ffceb097b6fe5d8886d39535c1149db2766f006f9b042c1653e87d",
+      "multiply_3x1.stdout": "0abd41339f0afa9848fb77ebaca473dc68e32c3eae8a759e3636b7ac8eceb369",
+      "multiply_3x2.stdout": "a9b25e05382a96ceb5374d2c5c3621ecc6a556c06abbf30c94df0201bf036e05",
+      "multiply_3x3.stdout": "bee6da8e8f1700cfcf364de0627807efc976c8c6f6757b923f21e24546ed00d8",
+      "multiply_3x4.stdout": "6e4d246fcd175a6a641a934713230d100ef1d8e9faa65395c53195439a8cdd0e",
+      "multiply_4x1.stdout": "9ca2e36f8f6baa71392c0fd9f70354813bf43ba5418b1d8d2d8eb2c18516c5fa",
+      "multiply_4x2.stdout": "adb1b503819504f5c69c9f9f322afcb66bfc97d6b9c7e94255f9aeebe207a97a",
+      "multiply_4x3.stdout": "6672d0a6f16b271fb748de6ec970b3d972b99c9a21af59589b220bbf05e4a17a",
+      "multiply_4x4.stdout": "3eb4d37f3bd47b9cbd4a413d59d8a1beef26d5428ee8067ce8659b3fcd5e37ee",
+      "transpose_1x1.stdout": "67792cf92a5d01299a8894b6b18d7fd057899b65d654e86bb3c341ab30d60714",
+      "transpose_1x2.stdout": "427b9c8fd5d27a197bf08faf2ddb36acdcdce69e097b0c798415cc52e49f047b",
+      "transpose_1x3.stdout": "7a0d1a6edfc11619e3aa6c3e1a27c559b8a057ba12b4f38a9d65accee41da529",
+      "transpose_1x4.stdout": "7ae58e62f6162062c8eebfe50e544e30e7f5fb5cccb0ec1d66f18fe33e34a83b",
+      "transpose_2x1.stdout": "469f9f5b02f6bb008d6ba65a69cfe7a1fe1fdfd900df5ecfddc7eb98145bbc72",
+      "transpose_2x2.stdout": "345d51c8b7205991b748a636bb8414b84efeabf392cf65832dc9b18fb391d911",
+      "transpose_2x3.stdout": "8fa701daf65da4024233d3653ef2e1b8a40cd6daa2b94d486625199efe70d778",
+      "transpose_2x4.stdout": "e6f9a637d1f31be063c25b28bd7a798086bda5a837b7368a8422620f410c563f",
+      "transpose_3x1.stdout": "dca1352a64e16bfb99c8a3fba10ce90aac9e54af8c8a011ed19845ff7e8ed86c",
+      "transpose_3x2.stdout": "0b7346e7e2d462f2f644654e0eceb0122c16e978abdd540b82145ff3d4aeac7e",
+      "transpose_3x3.stdout": "8a2d3e71424402119b1c6da82112abc0d952d026f3b5084890a8297f0fbf5cab",
+      "transpose_3x4.stdout": "4a8a22689005b70dd5f585b9fdf40610cfe9c3846e0cd67e68af5fe23d0fa740",
+      "transpose_4x1.stdout": "a4b1bf3c6c4bfac4281989e6be09f694e90eaebf02bb49b159e4edbdf4ca4790",
+      "transpose_4x2.stdout": "468cc3fbfb255306dd3f6dfff2659ec102907d1d05c0bbbc37afb4e69d20126e",
+      "transpose_4x3.stdout": "713c1d4faf7f26c78cb4243680765a4804f6186ee1ecaf67a071de966e5d1717",
+      "transpose_4x4.stdout": "1e1c9a55d19f785a44ecea7114dcfcacc10affcb73608beb90fe0a66d0409378",
+      "matmul_1x1x1.stdout": "5d3a4cc177323f66554e1817915d2c94ffaf08c7a931199fd2b81028e5616c53",
+      "matmul_1x1x2.stdout": "da88db8147c792f082ff2cba55240e65176455fd1959783b253d12368aff3fbf",
+      "matmul_1x1x3.stdout": "2fc136fc68143e9566a4c11a7a371c7b5c125795a6aba7bbb4180d96276bcee3",
+      "matmul_1x1x4.stdout": "02cf2ffc389751e013b48d1bfce867af081d308137158696af11a3915403af54",
+      "matmul_1x2x1.stdout": "779f2c9f9faaa403ad6fd167cb04c23150ec056bf01b38986418b5ee2d90977e",
+      "matmul_1x2x2.stdout": "7493193dd432f99025bd36cdf82093b6437102b814494ba251fdc2e52499b7ca",
+      "matmul_1x2x3.stdout": "f0e1295c4809d22386bffc895b17e87dcc7e0b764e226c730ab697d62bd41002",
+      "matmul_1x2x4.stdout": "1910d75d13c37907a8dc1c0f570a3ec968c097df0a693858e790725ea429d440",
+      "matmul_1x3x1.stdout": "61f72b0ff29d114d1793f8878facfd4522cb83ccc5b0106b6968b15b921cf839",
+      "matmul_1x3x2.stdout": "b587e80e5d3bd9eda6a3f2f4dff70ad58cf57957f866e2fbc2d858980309b191",
+      "matmul_1x3x3.stdout": "563f441fb512bbc0bab3fe63adf6acc7305a74ec20280920d133d33e9aeb61ec",
+      "matmul_1x3x4.stdout": "58853a3c66093eaffe0c5af63c1a9aeedd4f388f4a466c0e483dd1ffc299803b",
+      "matmul_1x4x1.stdout": "8565cd295f344b1b74cd873f5a55089a7e6a3b80d7743750203ab826fa25b0f8",
+      "matmul_1x4x2.stdout": "61427e8f64c1a4c4349f6759038f4bbab3e369cf04bcbf1e4ce0261c253ca5dc",
+      "matmul_1x4x3.stdout": "053821466b0b0b81c71dc00fc97f6910a416b609c292f145bbf5beec6bf80389",
+      "matmul_1x4x4.stdout": "95663dd13294c12d949a30a71c64069f27a53135c7c6b31d6daa6e600db625d3",
+      "matmul_2x1x1.stdout": "f623f98f2d8a7f5f9eee9388edf530c423812f8629afbda0ad25087da709fe77",
+      "matmul_2x1x2.stdout": "d568476de2ea42839398ee4e14495e4262a9d1e8feb1e0efe4e2fc0a9f830fba",
+      "matmul_2x1x3.stdout": "95e0512fe935503b1f1e328d584ceb885fb7fe7545d96c45cafac9809032b9fc",
+      "matmul_2x1x4.stdout": "5aad5ed0ab865a12940a5eacb8c86ed25fc1d823e93fbfe1fcc4ac47067c617a",
+      "matmul_2x2x1.stdout": "ab9e90ff01607a4da88ea3bcda870e5665bd44efa6cd4daefe3ddd90c848c5e2",
+      "matmul_2x2x2.stdout": "f2c14eb7d2778b88656faa20c6d334f380863e44767fe6b8fc9ef494878d33b0",
+      "matmul_2x2x3.stdout": "35d5f48924bcde5dfd74f5de730e49ca7db680519c10d2d83abb5be2474ce3a3",
+      "matmul_2x2x4.stdout": "c27f07bdf95a7d5f7ff0ca340d769de93e111c286c1722e07673123059870d17",
+      "matmul_2x3x1.stdout": "ea41db37b1ee945eaac2421733342798d8bc8fd69790d7f69c2de364b7184b6a",
+      "matmul_2x3x2.stdout": "16bc3a3ba8823b11fa12c21add87fda812aa141c415cf36c4e723b97927c8d74",
+      "matmul_2x3x3.stdout": "5eb4ceeec3c5ec0cff3b41a5884c09473178484fd399e44d1403a40059039c4a",
+      "matmul_2x3x4.stdout": "7515632c15c7f6d7bfff8acb6e9ec2ca96cc3f573c331a18bd74a26d25963296",
+      "matmul_2x4x1.stdout": "9709c30fdad2601e116625f95170cf2baef5ef390fccca525cecf3427017ddfe",
+      "matmul_2x4x2.stdout": "93546a2d15a73ce1354e6d84a97821a5a37e421e9c88a58b156d6ae29b341e49",
+      "matmul_2x4x3.stdout": "e41e631a33c333d204c4ad4da0356da6fbc65e838e531a399ef5aa8c3079a10b",
+      "matmul_2x4x4.stdout": "28dc67efbb239686af4e57aa7b09c755b48e8877e6e0bcfc6bb8c8585fd9535c",
+      "matmul_3x1x1.stdout": "1989c86bc93682f7e46095900944474f22049fbf8f177cf7c4e0c3eada5987b7",
+      "matmul_3x1x2.stdout": "3c6f217989527210da4a8c543f1d2a791899df41854649340f4b1a2047f8b5ef",
+      "matmul_3x1x3.stdout": "42e7f0b9ed0cc84bc93d7a25c1bbf36160eb3ecc14f362c49582fa7a57a41ff8",
+      "matmul_3x1x4.stdout": "7bb6ee1d4bca03fc8a1889bdc52340e508132ac7e46052409df68a8bfcd93279",
+      "matmul_3x2x1.stdout": "781b83a56f90f5326a0cfc2182de79bb134fb7b8af7f5151ca234c04e4bb3829",
+      "matmul_3x2x2.stdout": "dc37a269de5cd8a906f50467797ae83f5eb1e6b0137bb22ca2f5963c662067ec",
+      "matmul_3x2x3.stdout": "76710384e446933e3b4c0012b00d46b2d382dd8211c51e5e27cb4a86e076d9eb",
+      "matmul_3x2x4.stdout": "5a71f43b3e69d1fa6fdfc7c8adfd01edfea1914b19a8693148ff3aa7d064a304",
+      "matmul_3x3x1.stdout": "8ec8f3e7f763887a3f6d96252e12fdb47ef8d7b64141db5b95cfd1325f792ebb",
+      "matmul_3x3x2.stdout": "4b6a491a66d6516a2d57711377a219351f0e9c49751677fd6de742446d601143",
+      "matmul_3x3x3.stdout": "4a35381f7b63748455c85cbe1da0b283abcb16d1d13ab3adafcf81549300d8b8",
+      "matmul_3x3x4.stdout": "6fb45dcd3284cdb97aac6c40959cd59614a62480661396088c095f6c87b94d74",
+      "matmul_3x4x1.stdout": "e2ef7cb76b8047c2a3e37fd6827bd339ab2ed6ffae61f5f147c06b4d31670299",
+      "matmul_3x4x2.stdout": "7754e8e863dc5656015b4a500ee24b3f3fd14ec710c9fcc692b0a457951ac465",
+      "matmul_3x4x3.stdout": "dfea455905903c0ebbaea9621504d0492698bf02619f23de73f31b32d08c24e0",
+      "matmul_3x4x4.stdout": "43f62f6638af079d742b41bd0b8d3006598dcf3e9d69fd06e415ac2485cfb563",
+      "matmul_4x1x1.stdout": "f07dbee15181735f797c1c56886c75b777924bffdc296dfc3b1c68ab2a677ff2",
+      "matmul_4x1x2.stdout": "bfd8de8096967cfc070a211ec071bed8fde4f8bf719fbf1ebe86823e2fc60815",
+      "matmul_4x1x3.stdout": "9dc24135f23bed3a0666b41b55d9e802c44013d82e5a94a970be3cccec5867ce",
+      "matmul_4x1x4.stdout": "df12f36c26653ce6acb28748b3b52b547f6b33d3fddc2702493b09a964283d29",
+      "matmul_4x2x1.stdout": "f72eb1af559a483b2a9515313b0335cfc09818318996234cbed3017c5fc47f56",
+      "matmul_4x2x2.stdout": "3fc1cc8d89b84a3637cdc507ba0e7401cfa287e8063eeda6f33a7aca118626f0",
+      "matmul_4x2x3.stdout": "cccc991ca19151ba994e9fe64cf29ffc869d121fe976fe48837fb36aa010f025",
+      "matmul_4x2x4.stdout": "42650abbbdc729c189b7c3ae7740281f7c8df3d35621a3c925b2666eb6240d69",
+      "matmul_4x3x1.stdout": "669101d650dc04fa03622cf1c34c96ec34803cb7b159f0f5d5394841406881d1",
+      "matmul_4x3x2.stdout": "c45e61e7e5e427e0dddee12467bac8508cf5e877c7e8e23ab1ebf40b2eef0657",
+      "matmul_4x3x3.stdout": "1042b8fbd48e65ad9f098b3d6112c7bfbfb58d49c46274dba9f79bfb470b0efc",
+      "matmul_4x3x4.stdout": "05ddd8a22e484f56f597e9691e2207014df64845185da8b83b504f41b3ebe707",
+      "matmul_4x4x1.stdout": "044d07775cea55ff089e16649e5783fbcd098e6e04b26401b0e9c25684d3b598",
+      "matmul_4x4x2.stdout": "690f5367048b55edaff4564c8c3d45565c2e3717f058153a8fe8742aa987d6c8",
+      "matmul_4x4x3.stdout": "3075f5f3f68666e163fc5958d6fa90cdbc14001be7371cf3831ddd6f0a4d67dd",
+      "matmul_4x4x4.stdout": "2cff6f683cd53a3513b4efaad3b9cda71ea7e10f86f5d02be5d3fd03ae07aaf5",
+      "scale_1x1.stdout": "88b44a06048bf12d7106cb80d64c2370153aaa519e8fd15d8b5c64c701edabe2",
+      "scale_1x2.stdout": "6d4933381c04a53ff1502c104c852fb0917c2f5b558459d409ee092c6229866d",
+      "scale_1x3.stdout": "501b966cb3d562bbb93e959a27e94fe2d5cba6144fee4a9ea975c8db4c1d1435",
+      "scale_1x4.stdout": "e160c1dd05ef8d17aab732e92555fe6d2ff8f32b5b11586ec9b1bf3d5ec6f1c6",
+      "scale_2x1.stdout": "317783d89bc5f66470831ac3b1eeba0b67d0b17638637cbc37d08072f1261cc7",
+      "scale_2x2.stdout": "e0252288d794883f15d341b4870b2a95aab01f1d72e3514214642c1aedeede96",
+      "scale_2x3.stdout": "ee369959aae699e279c605efb37919f892bdbb45ecde476d761780f75bda701f",
+      "scale_2x4.stdout": "16d16a89baf7da59a9560fe0e3c7a4a46c35d962a37028cc90077268afffbb0b",
+      "scale_3x1.stdout": "eb749aa46cc7b3aab1ec7d9648adff41a892762be4c12f474ffe12d537342a6d",
+      "scale_3x2.stdout": "0081f3375c8cefc99d043714f9d4d175faef192e49b30194913482f957b5f2bd",
+      "scale_3x3.stdout": "6649dc45afe72856d8b1a892d2572d067010d8a768144f86c9f9c6f3d9c80f64",
+      "scale_3x4.stdout": "b0c1ea00e052dc17af6d4b468d3514f4fd789b8b2033a809fd152bdd970fce03",
+      "scale_4x1.stdout": "815496d130a1f9eddb79d6609f5e78eccd7627d5acc73637cafa298100e9543e",
+      "scale_4x2.stdout": "e47eeba62ad2a7310bd7d7b34a2621c7e283d9e5542945efef7cc450fe0ee8cf",
+      "scale_4x3.stdout": "73c3714d6748e5ed018bf5140cc26174debfd9c8193d818a26403703418235c9",
+      "scale_4x4.stdout": "8171b670979ffa04d5adfa049d2f0c066a4513eba99ae7b9bd47f9f58b152424"
+    },
+    "reason": "Successful methods reused; certificates and fault controls rerun."
+  },
+  "negative_controls": {
+    "copy": {
+      "detected": true
+    },
+    "add": {
+      "detected": true
+    },
+    "multiply": {
+      "detected": true
+    },
+    "transpose": {
+      "detected": true
+    },
+    "matmul": {
+      "detected": true
+    },
+    "scale": {
+      "detected": true
+    }
+  },
+  "native_fault_replay": {
+    "status": "PASS",
+    "controls": {
+      "copy": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "add": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "multiply": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "transpose": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "matmul": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          4
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      },
+      "scale": {
+        "baseline_passed": true,
+        "mutant_failed_exact_output": true,
+        "shape": [
+          2,
+          3,
+          1
+        ],
+        "a_values": [
+          0.125,
+          0.25,
+          0.375,
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0,
+          1.125,
+          1.25,
+          1.375,
+          1.5,
+          1.625,
+          1.75,
+          1.875,
+          2.0
+        ],
+        "b_values": [
+          2.125,
+          2.25,
+          2.375,
+          2.5,
+          2.625,
+          2.75,
+          2.875,
+          3.0,
+          3.125,
+          3.25,
+          3.375,
+          3.5,
+          3.625,
+          3.75,
+          3.875,
+          4.0
+        ]
+      }
+    },
+    "checker_source_sha256": "033a78fe20b9c592e316f17def63f46e36ab113f166314dcbdb18ffc265971a8"
+  },
+  "commands": [
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/kani-driver",
+        "--version"
+      ],
+      "started_at": "2026-10-06T18:58:45.454809+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/cbmc",
+        "--version"
+      ],
+      "started_at": "2026-10-06T18:58:45.468185+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Id}}",
+        "sage-einsums:22a1159"
+      ],
+      "started_at": "2026-10-06T18:58:45.474076+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/public-method-certificate.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "clang++-18 -std=c++20 -fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm /work/certificate/modern.cpp -o /work/certificate/modern.ll && clang++-18 -std=c++11 -fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm /work/certificate/lowered.cpp -o /work/certificate/lowered.ll"
+      ],
+      "started_at": "2026-10-06T18:58:45.512188+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/expression-certificate.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "clang++-18 -std=c++20 -fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm /work/expression-certificate/modern.cpp -o /work/expression-certificate/modern.ll && clang++-18 -std=c++11 -fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm /work/expression-certificate/lowered.cpp -o /work/expression-certificate/lowered.ll"
+      ],
+      "started_at": "2026-10-06T18:58:48.969025+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/cbmc",
+        "runs/20261006-repository-cpp20-six/negative-copy/copy_2x3.cpp",
+        "--cpp11",
+        "--object-bits",
+        "12",
+        "--unwind",
+        "18",
+        "--unwinding-assertions",
+        "--bounds-check",
+        "--pointer-check",
+        "--signed-overflow-check",
+        "--unsigned-overflow-check",
+        "--trace",
+        "--json-ui"
+      ],
+      "started_at": "2026-10-06T18:58:54.179282+00:00",
+      "returncode": 10
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/cbmc",
+        "runs/20261006-repository-cpp20-six/negative-add/add_2x3.cpp",
+        "--cpp11",
+        "--object-bits",
+        "12",
+        "--unwind",
+        "18",
+        "--unwinding-assertions",
+        "--bounds-check",
+        "--pointer-check",
+        "--signed-overflow-check",
+        "--unsigned-overflow-check",
+        "--trace",
+        "--json-ui"
+      ],
+      "started_at": "2026-10-06T18:58:54.427354+00:00",
+      "returncode": 10
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/cbmc",
+        "runs/20261006-repository-cpp20-six/negative-multiply/multiply_2x3.cpp",
+        "--cpp11",
+        "--object-bits",
+        "12",
+        "--unwind",
+        "18",
+        "--unwinding-assertions",
+        "--bounds-check",
+        "--pointer-check",
+        "--signed-overflow-check",
+        "--unsigned-overflow-check",
+        "--trace",
+        "--json-ui"
+      ],
+      "started_at": "2026-10-06T18:58:54.702982+00:00",
+      "returncode": 10
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/cbmc",
+        "runs/20261006-repository-cpp20-six/negative-transpose/transpose_2x3.cpp",
+        "--cpp11",
+        "--object-bits",
+        "12",
+        "--unwind",
+        "18",
+        "--unwinding-assertions",
+        "--bounds-check",
+        "--pointer-check",
+        "--signed-overflow-check",
+        "--unsigned-overflow-check",
+        "--trace",
+        "--json-ui"
+      ],
+      "started_at": "2026-10-06T18:58:54.970937+00:00",
+      "returncode": 10
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/cbmc",
+        "runs/20261006-repository-cpp20-six/negative-matmul/matmul_2x3x4.cpp",
+        "--cpp11",
+        "--object-bits",
+        "12",
+        "--unwind",
+        "18",
+        "--unwinding-assertions",
+        "--bounds-check",
+        "--pointer-check",
+        "--signed-overflow-check",
+        "--unsigned-overflow-check",
+        "--trace",
+        "--json-ui"
+      ],
+      "started_at": "2026-10-06T18:58:55.203384+00:00",
+      "returncode": 10
+    },
+    {
+      "args": [
+        ".sage/verification/kani-0.68.0/bin/cbmc",
+        "runs/20261006-repository-cpp20-six/negative-scale/scale_2x3.cpp",
+        "--cpp11",
+        "--object-bits",
+        "12",
+        "--unwind",
+        "18",
+        "--unwinding-assertions",
+        "--bounds-check",
+        "--pointer-check",
+        "--signed-overflow-check",
+        "--unsigned-overflow-check",
+        "--trace",
+        "--json-ui"
+      ],
+      "started_at": "2026-10-06T18:58:55.863230+00:00",
+      "returncode": 10
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-build-copy.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-copy.cpp -o /work/native-copy && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-copy/native-copy.cpp -o /work/negative-copy/native-copy"
+      ],
+      "started_at": "2026-10-06T18:58:56.124575+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-baseline-copy.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/native-copy"
+      ],
+      "started_at": "2026-10-06T18:58:59.988268+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-mutant-copy.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/negative-copy/native-copy"
+      ],
+      "started_at": "2026-10-06T18:59:00.225746+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-build-add.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-add.cpp -o /work/native-add && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-add/native-add.cpp -o /work/negative-add/native-add"
+      ],
+      "started_at": "2026-10-06T18:59:00.467754+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-baseline-add.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/native-add"
+      ],
+      "started_at": "2026-10-06T18:59:04.822682+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-mutant-add.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/negative-add/native-add"
+      ],
+      "started_at": "2026-10-06T18:59:05.046664+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-build-multiply.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-multiply.cpp -o /work/native-multiply && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-multiply/native-multiply.cpp -o /work/negative-multiply/native-multiply"
+      ],
+      "started_at": "2026-10-06T18:59:05.284921+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-baseline-multiply.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/native-multiply"
+      ],
+      "started_at": "2026-10-06T18:59:09.628789+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-mutant-multiply.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/negative-multiply/native-multiply"
+      ],
+      "started_at": "2026-10-06T18:59:09.878318+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-build-transpose.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-transpose.cpp -o /work/native-transpose && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-transpose/native-transpose.cpp -o /work/negative-transpose/native-transpose"
+      ],
+      "started_at": "2026-10-06T18:59:10.167810+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-baseline-transpose.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/native-transpose"
+      ],
+      "started_at": "2026-10-06T18:59:14.579219+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-mutant-transpose.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/negative-transpose/native-transpose"
+      ],
+      "started_at": "2026-10-06T18:59:14.884967+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-build-matmul.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-matmul.cpp -o /work/native-matmul && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-matmul/native-matmul.cpp -o /work/negative-matmul/native-matmul"
+      ],
+      "started_at": "2026-10-06T18:59:15.116594+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-baseline-matmul.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/native-matmul"
+      ],
+      "started_at": "2026-10-06T18:59:19.618727+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-mutant-matmul.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/negative-matmul/native-matmul"
+      ],
+      "started_at": "2026-10-06T18:59:19.881227+00:00",
+      "returncode": 3
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-build-scale.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-scale.cpp -o /work/native-scale && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-scale/native-scale.cpp -o /work/negative-scale/native-scale"
+      ],
+      "started_at": "2026-10-06T18:59:20.158497+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-baseline-scale.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/native-scale"
+      ],
+      "started_at": "2026-10-06T18:59:24.289234+00:00",
+      "returncode": 0
+    },
+    {
+      "args": [
+        "docker",
+        "run",
+        "--rm",
+        "--platform",
+        "linux/amd64",
+        "--network",
+        "none",
+        "--cidfile",
+        "runs/20261006-repository-cpp20-six/native-mutant-scale.cid",
+        "--memory",
+        "2g",
+        "--cpus",
+        "2",
+        "-v",
+        "runs/20261006-repository-cpp20-six:/work",
+        "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
+        "sh",
+        "-c",
+        "/work/negative-scale/native-scale"
+      ],
+      "started_at": "2026-10-06T18:59:24.530995+00:00",
+      "returncode": 3
+    }
+  ],
+  "finished_at": "2026-10-06T18:59:24.790879+00:00"
+}
