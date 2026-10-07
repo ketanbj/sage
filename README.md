@@ -24,6 +24,11 @@ The complete library is **not yet certified equivalent**. Passing tests and the
 six proofs cover specific behavior. GPU support is outside this project's
 current scope. See [current results and limits](docs/status.md).
 
+The `prending-proofs` branch adds adapter guard and larger-layout proofs, selected
+library-path exploration and interface/ABI checks. See the
+[extension report](artifacts/pending-proofs/report.md) for exact scope and open
+reference findings.
+
 ## Start here
 
 For a quick look at the project, open the
@@ -95,13 +100,13 @@ running, testing or extending the project.
 | Folder | What it contains |
 |---|---|
 | [docs/](docs/) | The six guides: setup, status, verification, development and technical reference, plus the reading guide |
-| [artifacts/](artifacts/) | Presentation files in `sage-slides/output/` and recorded proof summaries in `tensor-six/` |
+| [artifacts/](artifacts/) | Presentation files in `sage-slides/output/`; maintained proof evidence in `tensor-six/` and `pending-proofs/` |
 | [ports/](ports/) | Independent implementations and Python packages: `einsums-rs/` for Rust, `einsums-cpp/` for C++20 |
 | [sage/](sage/) | Python code that prepares builds, generates inputs, compares results and writes reports |
 | [configs/](configs/) | YAML run settings and versioned translation instructions in `prompts/` |
 | [targets/](targets/) | The target catalog in `candidates/` and optional pilot-planning templates in `templates/` |
 | [tests/](tests/) | Unit and native integration tests |
-| [tools/](tools/) | Setup, wheel-building and API-replay commands; proof-summary helpers are in `verification/` |
+| [tools/](tools/) | Setup and wheel builds; `verification/` contains proof collection, API replay and library-path/backend experiments |
 | [verification/](verification/) | Formal proof specifications and harness source code used by the verifiers |
 | [fixtures/](fixtures/) | Comparison drivers, input decoders and reference/translation fixtures used by campaigns |
 | [containers/](containers/) | Docker build definitions for the pinned generation and upstream-reference environments |

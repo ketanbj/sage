@@ -49,17 +49,19 @@ def prove(
         raise typer.BadParameter("the current proof pilot supports only einsums")
     if language not in ("rust", "cpp20"):
         raise typer.BadParameter("language must be rust or cpp20")
-    if profile not in ("scalar", "tensor-six"):
-        raise typer.BadParameter("profile must be scalar or tensor-six")
-    if reuse_checks and profile != "tensor-six":
-        raise typer.BadParameter("--reuse-checks requires --profile tensor-six")
+    if profile not in ("scalar", "tensor-six", "extended"):
+        raise typer.BadParameter("profile must be scalar or tensor-six or extended")
+    if reuse_checks and profile not in ("tensor-six", "extended"):
+        raise typer.BadParameter("--reuse-checks requires --profile tensor-six or extended")
     destination = output or (
         project_root()
         / "runs"
         / (datetime.now(UTC).strftime("%Y%m%dT%H%M%S.%fZ") + f"-einsums-{language}-proof")
     )
     typer.echo(
-        "Checking 144 public Tensor obligations and six fault controls."
+        "Checking 69 production contract obligations and five fault controls."
+        if profile == "extended"
+        else "Checking 144 public Tensor obligations and six fault controls."
         if profile == "tensor-six"
         else (
             "Checking 32 paired C++ obligations, then fault detection and replay."
@@ -74,7 +76,18 @@ def prove(
             from sage.verification.einsums_cpp import ModernCppProofRun
 
             runner = ModernCppProofRun
-        if profile == "tensor-six":
+        if profile == "extended":
+            from sage.verification.extended import ExtendedProofRun
+
+            path = ExtendedProofRun(
+                project_root(),
+                destination,
+                language=language,
+                reuse_checks=reuse_checks,
+                jobs=jobs,
+                timeout=timeout,
+            ).run()
+        elif profile == "tensor-six":
             from sage.verification.tensor_six import TensorSixProofRun
 
             path = TensorSixProofRun(
@@ -94,7 +107,11 @@ def prove(
     status = json.loads((path / "manifest.json").read_text())["status"]
     typer.echo(f"proof status: {status}")
     expected_status = (
-        "BOUNDED_TENSOR_API_PROVED" if profile == "tensor-six" else "BOUNDED_EQUIVALENCE_PROVED"
+        "BOUNDED_CONTRACTS_PROVED"
+        if profile == "extended"
+        else "BOUNDED_TENSOR_API_PROVED"
+        if profile == "tensor-six"
+        else "BOUNDED_EQUIVALENCE_PROVED"
     )
     if status != expected_status:
         raise typer.Exit(1)

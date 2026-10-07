@@ -13,7 +13,8 @@ You can read these guides in order, or choose the one that answers your question
 
 For a presentation, use the [overview slides](../artifacts/sage-slides/output/SAGE-Project-Overview.pdf)
 or the [technical slides](../artifacts/sage-slides/output/SAGE-Einsums-and-Symbolic-Verification.pdf).
-For recorded proof results, use the [evidence report](../artifacts/tensor-six/report.md).
+For recorded results, use the [six-operation report](../artifacts/tensor-six/report.md)
+and [proof-extension report](../artifacts/pending-proofs/report.md).
 
 ## Terms used in the guides
 

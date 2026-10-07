@@ -311,6 +311,11 @@ class TensorSixProofRun(ProofRun):
         shutil.copy2(Path(__file__), self.output / "proof_runner.py")
         shutil.copy2(Path(__file__).with_name("einsums.py"), self.output / "proof_support.py")
         bindings = [
+            "ports/einsums-cpp/api/execute.hpp",
+            "ports/einsums-cpp/sage_api.h",
+            "ports/einsums-rs/src/lib.rs",
+            "ports/einsums-rs/src/proof_contract.rs",
+            "ports/einsums-cpp/api/proof_contract.hpp",
             "ports/einsums-rs/src/api/bounded_tensor.rs",
             "ports/einsums-rs/src/api/mod.rs",
             "ports/einsums-rs/src/protocol.rs",

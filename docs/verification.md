@@ -13,6 +13,7 @@ those results mean and how to produce new evidence.
 
 - [Compare behavior](#compare-behavior): campaigns, reports and API replay.
 - [Prove the six Tensor operations](#prove-the-six-tensor-operations): scope, setup and adapter checks.
+- [Extended contract proofs](#extended-contract-proofs): adapter decisions, larger layouts and library paths.
 - [Separate upstream scalar proof](#separate-upstream-scalar-proof): the earlier copy/transpose profile.
 - [Retain and publish evidence](#retain-and-publish-evidence): run bundles and tracked summaries.
 
@@ -202,6 +203,85 @@ uv run python tools/verification/check_tensor_six_apis.py --language cpp20 \
 
 These library names are for macOS; Linux uses `.so`. The script sets the backend
 loader and imports the checked-in Python package for that language.
+
+## Extended contract proofs
+
+The `prending-proofs` branch adds a separate `extended` profile in both languages.
+Its 69 obligations check production metadata routing, exact dyadic eligibility,
+finite real pivot order, FFT frequency-bin indexing and all 64 copy/transpose
+shapes with dimensions 1–8. Five source faults require symbolic detection and
+native witnesses. Success is `BOUNDED_CONTRACTS_PROVED`; any incomplete obligation,
+unwinding failure, missing tool, failed certificate or control prevents success.
+
+These are proofs of the stated decisions and layout algorithms. Complete JSON
+parsing, serialization, FFI lifetimes, numerical LU/FFT arithmetic and upstream
+backends remain outside them. C++ larger-shape proofs concern kernels; the public
+bounded Tensor remains limited to dimensions 1–4. The
+[extension report](../artifacts/pending-proofs/report.md) defines the contract,
+exact domains, API boundaries and retained findings.
+
+Use the same pinned macOS arm64 verifier setup and Docker compiler image as the
+six-operation profile:
+
+```sh
+uv run sage prove --profile extended --language rust --jobs 4 --timeout 3600
+uv run sage prove --profile extended --language cpp20 --jobs 4
+```
+
+Rust's larger owned-layout checks can take tens of minutes. Keep raw bundles.
+`--reuse-checks <complete-extended-rust-bundle>` reuses complete Rust obligations
+only with identical proof inputs/tools; all five controls and native witnesses
+run again. Extended C++ checks currently run fresh.
+
+### Explore selected library decisions
+
+The existing full-library campaign still instruments only its decoder. A separate
+experiment instruments the actual C++ production decision bodies for FFT bins,
+real pivot comparison and dyadic membership. It verifies symbolic event addresses
+against source locations, rejects bootstrap/duplicate/invalid payloads and replays
+accepted solver inputs natively. Integer bit patterns let it explore the finite
+real ordering decisions without claiming support for symbolic floating arithmetic.
+
+Build the native libraries using the commands above, then run:
+
+```sh
+uv run python tools/verification/explore_library_paths.py \
+  --output runs/library-paths --max-inputs 256
+uv run python tools/verification/replay_library_paths.py \
+  --run runs/library-paths --output runs/library-paths/api-replay.json
+uv run python tools/verification/check_backend_contracts.py \
+  --output runs/backend-contracts
+```
+
+Use new output directories. These require the prepared `sage-einsums:22a1159`
+image and, for upstream backend probes, `sage-einsums-python:22a1159` plus the
+pinned checkout. Source/file/image hashes and raw outputs are retained. Public
+path replay is finite JSON/FFI evidence for each language. It checks copy values,
+frequency coordinates and first LU pivots; it does not expose the dyadic guard's
+internal branch or prove all LU arithmetic.
+
+Backend probes exercise all six public plan classes, GEMM transpose modes and
+GEMV, four dtypes, larger shapes and buffer layouts, with one/two-thread environment
+settings over three repetitions. Unresolved reference disagreements cause a
+nonzero exit. Both ports passing does not waive those reference findings or
+convert finite backend checks into formal equivalence.
+
+### Classify and publish
+
+Classify historical saved replay findings without changing their outcomes:
+
+```sh
+uv run python tools/verification/classify_disagreements.py \
+  --run runs/<rust-api-replay> --run runs/<cpp-api-replay> \
+  --output artifacts/pending-proofs/disagreements.json
+uv run python tools/verification/collect_extended.py \
+  --rust runs/<rust-extended-proof> --cpp runs/<cpp-extended-proof> \
+  --paths runs/library-paths --backends runs/backend-contracts
+```
+
+Unknown classifications fail closed. Classification leaves numerical residual
+findings unresolved. The collector rejects incomplete or stale proof, binding
+and native replay evidence and publishes a compact summary; raw runs stay local.
 
 ## Separate upstream scalar proof
 

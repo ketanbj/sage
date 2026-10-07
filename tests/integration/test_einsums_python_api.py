@@ -373,3 +373,161 @@ def test_nonhermitian_lyapunov_and_repeated_eigenvalues(api, dtype):
     close(w, [2, 2, 2], dtype)
     close(right.conj().T @ right, np.eye(3), dtype)
     close(left.conj().T @ left, np.eye(3), dtype)
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_expanded_numerical_domains(api, dtype):
+    """Deterministically generated larger/empty, scaled and rank-deficient inputs."""
+    from pyeinsums import _backend
+
+    rng = np.random.default_rng(77101)
+    for m, k, n in [(1, 8, 3), (8, 5, 7), (0, 3, 2), (9, 9, 9)]:
+        for exponent in (-12, 0, 12):
+            a = np.ldexp(rng.uniform(-1, 1, (m, k)), exponent).astype(dtype)
+            b = np.ldexp(rng.uniform(-1, 1, (k, n)), -exponent).astype(dtype)
+            if np.issubdtype(dtype, np.complexfloating):
+                a += 0.25j * a
+                b -= 0.5j * b
+            before_a, before_b = a.copy(), b.copy()
+            close(_backend.result("matmul", a, b), a @ b, dtype)
+            close(_backend.result("subtract", a, a), np.zeros_like(a), dtype)
+            close(_backend.result("negate", a), -a, dtype)
+            np.testing.assert_array_equal(a, before_a)
+            np.testing.assert_array_equal(b, before_b)
+    # Exact diagonal singular values avoid asserting nonunique bases.
+    s = np.array([1, 0.125, 2**-10, 2**-20, 0, 0], dtype=np.empty((), dtype=dtype).real.dtype)
+    source = np.diag(s).astype(dtype)
+    u, actual, vh = api.core.svd(source)
+    close(actual, s, dtype)
+    close(np.asarray(u) @ np.diag(np.asarray(actual)) @ np.asarray(vh), source, dtype)
+    for n in (1, 2, 3, 8, 31, 64):
+        for d in (0.125, -2.0, 2**-20):
+            close(_backend.result("fftfreq", n=n, d=d), np.fft.fftfreq(n, d), np.float64)
+            close(_backend.result("rfftfreq", n=n, d=d), np.fft.rfftfreq(n, d), np.float64)
+
+
+@pytest.mark.parametrize("dtype", DTYPES)
+def test_real_pivot_ties_and_precision_extremes(api, dtype):
+    real = np.empty((), dtype=dtype).real.dtype
+    tiny = np.nextafter(real.type(0), real.type(1))
+    huge = np.finfo(real).max
+    for x, y in [(1, -1), (0, -0.0), (tiny, 0), (huge, huge / 2), (tiny, tiny * 2)]:
+        source = np.array([[x], [y]], dtype=dtype)
+        pivots = api.core.getrf(source)
+        assert int(np.asarray(pivots)[0]) == (2 if abs(y) > abs(x) else 1)
+
+
+def test_concurrent_native_json_ownership_and_errors(api):
+    """CDLL releases the GIL, so requests actually overlap inside the native ports."""
+    import ctypes
+    import json
+    from concurrent.futures import ThreadPoolExecutor
+
+    from pyeinsums import _backend
+
+    library = ctypes.CDLL(_backend._load()._name)
+    library.sage_api_request.argtypes = [ctypes.c_void_p, ctypes.c_size_t]
+    library.sage_api_request.restype = ctypes.c_void_p
+    library.sage_api_free.argtypes = [ctypes.c_void_p]
+    library.sage_api_free.restype = None
+    assert library.sage_api_request(None, 1) is None
+    library.sage_api_free(None)
+
+    def request(payload):
+        source = ctypes.create_string_buffer(payload)
+        pointer = library.sage_api_request(source, len(payload))
+        assert pointer
+        # The returned allocation must survive destruction and reuse of input storage.
+        del source
+        gc.collect()
+        try:
+            return json.loads(ctypes.string_at(pointer))
+        finally:
+            library.sage_api_free(pointer)
+
+    malformed = [
+        b"",
+        b"\xff",
+        b"{}",
+        b"null",
+        b"{",
+        b'{"op":"unknown"}',
+        b'{"op":"copy","params":[]}',
+        b'{"op":"zeros","params":{"shape":[-1]}}',
+        b'{"op":"zeros","params":{"shape":[9223372036854775807,3]}}',
+    ]
+    for payload in malformed:
+        assert "error" in request(payload)
+
+    def worker(index):
+        for attempt in range(24):
+            a = np.eye(8) * (index + attempt + 1)
+            payload = json.dumps(
+                {"op": "matmul", "arrays": [_backend.encode(a), _backend.encode(a)]}
+            ).encode()
+            response = request(payload)
+            result = _backend.decode(response["ok"]["arrays"][0])
+            np.testing.assert_array_equal(result, a @ a)
+            assert "error" in request(b'{"op":"matmul","arrays":[]}')
+        return index
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        assert sorted(pool.map(worker, range(8))) == list(range(8))
+
+
+def test_shared_c_abi_consumer_against_each_backend(api, tmp_path):
+    import ctypes
+    import shutil
+
+    from pyeinsums import _backend
+
+    include = tmp_path / "include/sage-einsums"
+    include.mkdir(parents=True)
+    shutil.copy2(ROOT / "ports/einsums-cpp/sage_api.h", include / "sage_api.h")
+    library = Path(_backend._load()._name)
+    executable = tmp_path / "c-consumer"
+    subprocess.run(
+        [
+            "cc",
+            "-std=c11",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-UNDEBUG",
+            "-I",
+            str(include.parent),
+            str(ROOT / "ports/einsums-cpp/c_consumer_tests.c"),
+            str(library),
+            f"-Wl,-rpath,{library.parent}",
+            "-o",
+            str(executable),
+        ],
+        capture_output=True,
+        check=True,
+    )
+    subprocess.run([str(executable)], capture_output=True, check=True)
+    # Verify the selected backend remains callable after a separate consumer process.
+    assert ctypes.CDLL(str(library)).sage_api_request
+
+
+@pytest.mark.parametrize(
+    "operation,arity",
+    [
+        ("copy", 1),
+        ("permute", 1),
+        ("scale", 1),
+        ("negate", 1),
+        ("add", 2),
+        ("subtract", 2),
+        ("multiply", 2),
+        ("divide", 2),
+        ("matmul", 2),
+    ],
+)
+def test_normalized_adapter_arity(api, operation, arity):
+    from pyeinsums import _backend
+
+    value = np.ones((2, 2))
+    for n in (arity - 1, arity + 1):
+        with pytest.raises(ValueError, match="wrong number"):
+            _backend.call(operation, *[value] * n)

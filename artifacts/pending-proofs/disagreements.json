@@ -1,0 +1,126 @@
+{
+  "contract": "corrected-cpu-semantics-1",
+  "status": "CLASSIFIED_WITH_UNRESOLVED_FINDINGS",
+  "claim": "Observation classification only; no new proof, outcome rewriting or compatibility waiver.",
+  "classifier_sha256": "4282b09823cbaf6fdedeea31fe99988c7cee8d75bd1d1785b53192e07620b0c9",
+  "runs": [
+    {
+      "run": "20260908T184451.753740Z-einsums-api",
+      "comparisons_sha256": "503db76c24b82c6b5dcfb73cd113608d876fc5a61fb462775ebe4d9dd7154541",
+      "manifest_sha256": "4a96729995e63e31d8b8a4b38204650afb4dc3a77f834c62ffcc8200cb410b0f",
+      "original_outcomes": {
+        "PASS": 13810,
+        "REFERENCE_DISAGREEMENT": 2062
+      },
+      "classified": 2062,
+      "unclassified": 0,
+      "unresolved_numerical": 351,
+      "groups": [
+        {
+          "operation": "geev",
+          "classification": "NUMERICAL_RESIDUAL_UNRESOLVED",
+          "count": 23
+        },
+        {
+          "operation": "lu",
+          "classification": "NUMERICAL_RESIDUAL_UNRESOLVED",
+          "count": 232
+        },
+        {
+          "operation": "pseudoinverse",
+          "classification": "NUMERICAL_RESIDUAL_UNRESOLVED",
+          "count": 96
+        },
+        {
+          "operation": "pseudoinverse",
+          "classification": "REFERENCE_SHAPE_DEFECT",
+          "count": 416
+        },
+        {
+          "operation": "solve_continuous_lyapunov",
+          "classification": "REFERENCE_BACKEND_UNSUPPORTED",
+          "count": 128
+        },
+        {
+          "operation": "solve_continuous_lyapunov",
+          "classification": "REFERENCE_WRAPPER_UNSUPPORTED",
+          "count": 128
+        },
+        {
+          "operation": "svd_nullspace",
+          "classification": "RANK_POLICY_DIFFERENCE",
+          "count": 43
+        },
+        {
+          "operation": "truncated_svd",
+          "classification": "APPROXIMATION_CONTRACT_DIFFERENCE",
+          "count": 512
+        },
+        {
+          "operation": "truncated_syev",
+          "classification": "APPROXIMATION_CONTRACT_DIFFERENCE",
+          "count": 484
+        }
+      ]
+    },
+    {
+      "run": "20261006T151151.290470Z-einsums-api-cpp20",
+      "comparisons_sha256": "e860bbed7ce3057d721c883b4481e2beb9489c95452767c9ebb2c81a783ade1e",
+      "manifest_sha256": "17501e848d20658b2c05b9a93e0ee7d97e1913cea878cb335adf152de4d55440",
+      "original_outcomes": {
+        "PASS": 13816,
+        "REFERENCE_DISAGREEMENT": 2056
+      },
+      "classified": 2056,
+      "unclassified": 0,
+      "unresolved_numerical": 351,
+      "groups": [
+        {
+          "operation": "geev",
+          "classification": "NUMERICAL_RESIDUAL_UNRESOLVED",
+          "count": 23
+        },
+        {
+          "operation": "lu",
+          "classification": "NUMERICAL_RESIDUAL_UNRESOLVED",
+          "count": 232
+        },
+        {
+          "operation": "pseudoinverse",
+          "classification": "NUMERICAL_RESIDUAL_UNRESOLVED",
+          "count": 96
+        },
+        {
+          "operation": "pseudoinverse",
+          "classification": "REFERENCE_SHAPE_DEFECT",
+          "count": 416
+        },
+        {
+          "operation": "solve_continuous_lyapunov",
+          "classification": "REFERENCE_BACKEND_UNSUPPORTED",
+          "count": 128
+        },
+        {
+          "operation": "solve_continuous_lyapunov",
+          "classification": "REFERENCE_WRAPPER_UNSUPPORTED",
+          "count": 128
+        },
+        {
+          "operation": "svd_nullspace",
+          "classification": "RANK_POLICY_DIFFERENCE",
+          "count": 43
+        },
+        {
+          "operation": "truncated_svd",
+          "classification": "APPROXIMATION_CONTRACT_DIFFERENCE",
+          "count": 512
+        },
+        {
+          "operation": "truncated_syev",
+          "classification": "APPROXIMATION_CONTRACT_DIFFERENCE",
+          "count": 478
+        }
+      ]
+    }
+  ]
+}

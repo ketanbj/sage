@@ -244,11 +244,16 @@
     "scale_4x4"
   ],
   "public_api_bindings": {
-    "ports/einsums-rs/src/api/bounded_tensor.rs": "306008724194429610f0098cd040f5da2e7edd3305a99e08d17adfd4cec57a48",
-    "ports/einsums-rs/src/api/mod.rs": "1ff2a2d3cb8205e7bd06f61b55f109aae97604bed293e67bdcd80d4a05a2750b",
+    "ports/einsums-cpp/api/execute.hpp": "40f036a39c24cbdd032d0d0be6f2af6c3d3ce85943eec1ec692c5676a9aa3e0c",
+    "ports/einsums-cpp/sage_api.h": "dadc824e30d0cc8e295976a93c27f012b4109aaaf95710d3a3ab12a818c8fd3e",
+    "ports/einsums-rs/src/lib.rs": "5b22175e25ffbbfb2d9173d75e6b241ae320d54c4b8c23721c81e545e04ebe38",
+    "ports/einsums-rs/src/proof_contract.rs": "2a5471e364b12cc1e8679892a17be3b189bdf4dd5cac34e41115bd3650e346c6",
+    "ports/einsums-cpp/api/proof_contract.hpp": "d09327c812fb120efdbd9046eac00061ede1170b7a3fe76340fc9748b212fcfd",
+    "ports/einsums-rs/src/api/bounded_tensor.rs": "283635c187dd0856a3b3ad7acbea5358ee49ecd90b92a677e31b59e2200cc25b",
+    "ports/einsums-rs/src/api/mod.rs": "39a3a906ce6b3cf14583079f9760086926bb54928f97703b10bd849e794fec0e",
     "ports/einsums-rs/src/protocol.rs": "68db4fcdf8dd85126c89ac9bb162d0975be5dab69edbd83fbba426a0fbab840c",
-    "ports/einsums-cpp/api/bounded_tensor.hpp": "a1a831da51cb0940f1cdfe543f9482e2a6fb76a63b28b063019e4b6e62799dc5",
-    "ports/einsums-cpp/api/execute.cpp": "e77fa933de7c56083120055624e58e00267bd81393e6370c7114699b48aa1459",
+    "ports/einsums-cpp/api/bounded_tensor.hpp": "d2fc6976dffe003314c4282dc83684bbf3186d4d19e16787a3abe7019b585256",
+    "ports/einsums-cpp/api/execute.cpp": "24c04c1c1a4cfb3ec3ca01c9c830f2b05deba6461f08568ff4ed945db2d5249a",
     "ports/einsums-cpp/driver.cpp": "9a45fa7c6e82ec5a8abe88b66f9aa88d76acbb73832aa408fffe9c1d0d5236dc",
     "ports/einsums-cpp/library_driver.cpp": "fe25080196d179b43a825a7c59ea65e262600888e450624f868a672231d732d2"
   },
@@ -258,7 +263,7 @@
     "tensor_source.rs": "eb79bd57a92ef2e4dc9aef5f5563d90fae602e90d02912df640db8023ad82dfd",
     "kernels.hpp": "8091a7930e353894fb63465a892a7dda28a4633c13ab516c54c3e82bb6f508cd",
     "expression.rs": "12cf9a08c281ca0569fcb6736b437c37d54ac876d8239ecc4140e7d053d49c42",
-    "proof_runner.py": "033a78fe20b9c592e316f17def63f46e36ab113f166314dcbdb18ffc265971a8",
+    "proof_runner.py": "ccd4e24d0a72fb1535d96f10b737c17f86acdc45cb828b34d1e952b94557e71f",
     "proof_support.py": "8096cd64fe1d53031d13ae8186b21707ff291c24a8b5a469f9c99acfba6610ea",
     "compat.hpp": "ca0aeb8914efd39fe898b79a0d9e0f128615488ba96b56268f79e9213cb4d471",
     "tensor.rs": "ca9472079ae898b4ea5eead0f4f563c97b265bdf07a51aeda65ad31d428ea712"
@@ -724,7 +729,7 @@
         ]
       }
     },
-    "checker_source_sha256": "033a78fe20b9c592e316f17def63f46e36ab113f166314dcbdb18ffc265971a8"
+    "checker_source_sha256": "ccd4e24d0a72fb1535d96f10b737c17f86acdc45cb828b34d1e952b94557e71f"
   },
   "commands": [
     {
@@ -732,7 +737,7 @@
         ".sage/verification/kani-0.68.0/bin/kani-driver",
         "--version"
       ],
-      "started_at": "2026-10-06T18:57:31.759371+00:00",
+      "started_at": "2026-10-07T16:09:36.910331+00:00",
       "returncode": 0
     },
     {
@@ -740,7 +745,7 @@
         ".sage/verification/kani-0.68.0/bin/cbmc",
         "--version"
       ],
-      "started_at": "2026-10-06T18:57:31.816878+00:00",
+      "started_at": "2026-10-07T16:09:36.932072+00:00",
       "returncode": 0
     },
     {
@@ -752,79 +757,79 @@
         "{{.Id}}",
         "sage-einsums:22a1159"
       ],
-      "started_at": "2026-10-06T18:57:31.823526+00:00",
+      "started_at": "2026-10-07T16:09:36.943483+00:00",
       "returncode": 0
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/kani-driver",
-        "runs/20261006-repository-rust-six/negative-copy/tensor.rs",
+        "runs/pending-proofs-rust-six-current/negative-copy/tensor.rs",
         "--harness",
         "copy_2x3",
         "--output-format",
         "regular"
       ],
-      "started_at": "2026-10-06T18:57:31.876335+00:00",
+      "started_at": "2026-10-07T16:09:37.020489+00:00",
       "returncode": 1
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/kani-driver",
-        "runs/20261006-repository-rust-six/negative-add/tensor.rs",
+        "runs/pending-proofs-rust-six-current/negative-add/tensor.rs",
         "--harness",
         "add_2x3",
         "--output-format",
         "regular"
       ],
-      "started_at": "2026-10-06T18:57:43.380547+00:00",
+      "started_at": "2026-10-07T16:09:51.832411+00:00",
       "returncode": 1
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/kani-driver",
-        "runs/20261006-repository-rust-six/negative-multiply/tensor.rs",
+        "runs/pending-proofs-rust-six-current/negative-multiply/tensor.rs",
         "--harness",
         "multiply_2x3",
         "--output-format",
         "regular"
       ],
-      "started_at": "2026-10-06T18:57:58.865220+00:00",
+      "started_at": "2026-10-07T16:10:09.271482+00:00",
       "returncode": 1
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/kani-driver",
-        "runs/20261006-repository-rust-six/negative-transpose/tensor.rs",
+        "runs/pending-proofs-rust-six-current/negative-transpose/tensor.rs",
         "--harness",
         "transpose_2x3",
         "--output-format",
         "regular"
       ],
-      "started_at": "2026-10-06T18:58:14.298569+00:00",
+      "started_at": "2026-10-07T16:10:26.597354+00:00",
       "returncode": 1
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/kani-driver",
-        "runs/20261006-repository-rust-six/negative-matmul/tensor.rs",
+        "runs/pending-proofs-rust-six-current/negative-matmul/tensor.rs",
         "--harness",
         "matmul_2x3x4",
         "--output-format",
         "regular"
       ],
-      "started_at": "2026-10-06T18:58:41.311075+00:00",
+      "started_at": "2026-10-07T16:10:54.308140+00:00",
       "returncode": 1
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/kani-driver",
-        "runs/20261006-repository-rust-six/negative-scale/tensor.rs",
+        "runs/pending-proofs-rust-six-current/negative-scale/tensor.rs",
         "--harness",
         "scale_2x3",
         "--output-format",
         "regular"
       ],
-      "started_at": "2026-10-06T18:59:12.624740+00:00",
+      "started_at": "2026-10-07T16:11:26.230370+00:00",
       "returncode": 1
     },
     {
@@ -835,11 +840,11 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/native-copy.rs",
+        "runs/pending-proofs-rust-six-current/native-copy.rs",
         "-o",
-        "runs/20261006-repository-rust-six/native-copy"
+        "runs/pending-proofs-rust-six-current/native-copy"
       ],
-      "started_at": "2026-10-06T18:59:28.246273+00:00",
+      "started_at": "2026-10-07T16:11:41.201380+00:00",
       "returncode": 0
     },
     {
@@ -850,25 +855,25 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/negative-copy/native-copy.rs",
+        "runs/pending-proofs-rust-six-current/negative-copy/native-copy.rs",
         "-o",
-        "runs/20261006-repository-rust-six/negative-copy/native-copy"
+        "runs/pending-proofs-rust-six-current/negative-copy/native-copy"
       ],
-      "started_at": "2026-10-06T18:59:29.026879+00:00",
+      "started_at": "2026-10-07T16:11:41.911780+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/native-copy"
+        "runs/pending-proofs-rust-six-current/native-copy"
       ],
-      "started_at": "2026-10-06T18:59:29.245658+00:00",
+      "started_at": "2026-10-07T16:11:42.117606+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/negative-copy/native-copy"
+        "runs/pending-proofs-rust-six-current/negative-copy/native-copy"
       ],
-      "started_at": "2026-10-06T18:59:29.664908+00:00",
+      "started_at": "2026-10-07T16:11:42.585495+00:00",
       "returncode": 3
     },
     {
@@ -879,11 +884,11 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/native-add.rs",
+        "runs/pending-proofs-rust-six-current/native-add.rs",
         "-o",
-        "runs/20261006-repository-rust-six/native-add"
+        "runs/pending-proofs-rust-six-current/native-add"
       ],
-      "started_at": "2026-10-06T18:59:30.040471+00:00",
+      "started_at": "2026-10-07T16:11:42.973194+00:00",
       "returncode": 0
     },
     {
@@ -894,25 +899,25 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/negative-add/native-add.rs",
+        "runs/pending-proofs-rust-six-current/negative-add/native-add.rs",
         "-o",
-        "runs/20261006-repository-rust-six/negative-add/native-add"
+        "runs/pending-proofs-rust-six-current/negative-add/native-add"
       ],
-      "started_at": "2026-10-06T18:59:30.297030+00:00",
+      "started_at": "2026-10-07T16:11:43.218326+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/native-add"
+        "runs/pending-proofs-rust-six-current/native-add"
       ],
-      "started_at": "2026-10-06T18:59:30.538373+00:00",
+      "started_at": "2026-10-07T16:11:43.447454+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/negative-add/native-add"
+        "runs/pending-proofs-rust-six-current/negative-add/native-add"
       ],
-      "started_at": "2026-10-06T18:59:30.902882+00:00",
+      "started_at": "2026-10-07T16:11:43.847871+00:00",
       "returncode": 3
     },
     {
@@ -923,11 +928,11 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/native-multiply.rs",
+        "runs/pending-proofs-rust-six-current/native-multiply.rs",
         "-o",
-        "runs/20261006-repository-rust-six/native-multiply"
+        "runs/pending-proofs-rust-six-current/native-multiply"
       ],
-      "started_at": "2026-10-06T18:59:31.292870+00:00",
+      "started_at": "2026-10-07T16:11:44.253406+00:00",
       "returncode": 0
     },
     {
@@ -938,25 +943,25 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/negative-multiply/native-multiply.rs",
+        "runs/pending-proofs-rust-six-current/negative-multiply/native-multiply.rs",
         "-o",
-        "runs/20261006-repository-rust-six/negative-multiply/native-multiply"
+        "runs/pending-proofs-rust-six-current/negative-multiply/native-multiply"
       ],
-      "started_at": "2026-10-06T18:59:31.549083+00:00",
+      "started_at": "2026-10-07T16:11:44.493358+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/native-multiply"
+        "runs/pending-proofs-rust-six-current/native-multiply"
       ],
-      "started_at": "2026-10-06T18:59:31.788407+00:00",
+      "started_at": "2026-10-07T16:11:44.722923+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/negative-multiply/native-multiply"
+        "runs/pending-proofs-rust-six-current/negative-multiply/native-multiply"
       ],
-      "started_at": "2026-10-06T18:59:32.241985+00:00",
+      "started_at": "2026-10-07T16:11:45.132065+00:00",
       "returncode": 3
     },
     {
@@ -967,11 +972,11 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/native-transpose.rs",
+        "runs/pending-proofs-rust-six-current/native-transpose.rs",
         "-o",
-        "runs/20261006-repository-rust-six/native-transpose"
+        "runs/pending-proofs-rust-six-current/native-transpose"
       ],
-      "started_at": "2026-10-06T18:59:32.624449+00:00",
+      "started_at": "2026-10-07T16:11:45.505597+00:00",
       "returncode": 0
     },
     {
@@ -982,25 +987,25 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/negative-transpose/native-transpose.rs",
+        "runs/pending-proofs-rust-six-current/negative-transpose/native-transpose.rs",
         "-o",
-        "runs/20261006-repository-rust-six/negative-transpose/native-transpose"
+        "runs/pending-proofs-rust-six-current/negative-transpose/native-transpose"
       ],
-      "started_at": "2026-10-06T18:59:32.904462+00:00",
+      "started_at": "2026-10-07T16:11:45.775353+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/native-transpose"
+        "runs/pending-proofs-rust-six-current/native-transpose"
       ],
-      "started_at": "2026-10-06T18:59:33.179499+00:00",
+      "started_at": "2026-10-07T16:11:46.025098+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/negative-transpose/native-transpose"
+        "runs/pending-proofs-rust-six-current/negative-transpose/native-transpose"
       ],
-      "started_at": "2026-10-06T18:59:33.577414+00:00",
+      "started_at": "2026-10-07T16:11:46.421428+00:00",
       "returncode": 3
     },
     {
@@ -1011,11 +1016,11 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/native-matmul.rs",
+        "runs/pending-proofs-rust-six-current/native-matmul.rs",
         "-o",
-        "runs/20261006-repository-rust-six/native-matmul"
+        "runs/pending-proofs-rust-six-current/native-matmul"
       ],
-      "started_at": "2026-10-06T18:59:33.934795+00:00",
+      "started_at": "2026-10-07T16:11:47.179229+00:00",
       "returncode": 0
     },
     {
@@ -1026,25 +1031,25 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/negative-matmul/native-matmul.rs",
+        "runs/pending-proofs-rust-six-current/negative-matmul/native-matmul.rs",
         "-o",
-        "runs/20261006-repository-rust-six/negative-matmul/native-matmul"
+        "runs/pending-proofs-rust-six-current/negative-matmul/native-matmul"
       ],
-      "started_at": "2026-10-06T18:59:34.162269+00:00",
+      "started_at": "2026-10-07T16:11:47.393475+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/native-matmul"
+        "runs/pending-proofs-rust-six-current/native-matmul"
       ],
-      "started_at": "2026-10-06T18:59:34.382908+00:00",
+      "started_at": "2026-10-07T16:11:47.601441+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/negative-matmul/native-matmul"
+        "runs/pending-proofs-rust-six-current/negative-matmul/native-matmul"
       ],
-      "started_at": "2026-10-06T18:59:34.741232+00:00",
+      "started_at": "2026-10-07T16:11:47.973349+00:00",
       "returncode": 3
     },
     {
@@ -1055,11 +1060,11 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/native-scale.rs",
+        "runs/pending-proofs-rust-six-current/native-scale.rs",
         "-o",
-        "runs/20261006-repository-rust-six/native-scale"
+        "runs/pending-proofs-rust-six-current/native-scale"
       ],
-      "started_at": "2026-10-06T18:59:35.172942+00:00",
+      "started_at": "2026-10-07T16:11:48.352534+00:00",
       "returncode": 0
     },
     {
@@ -1070,27 +1075,27 @@
         "opt-level=2",
         "-C",
         "target-feature=-fma",
-        "runs/20261006-repository-rust-six/negative-scale/native-scale.rs",
+        "runs/pending-proofs-rust-six-current/negative-scale/native-scale.rs",
         "-o",
-        "runs/20261006-repository-rust-six/negative-scale/native-scale"
+        "runs/pending-proofs-rust-six-current/negative-scale/native-scale"
       ],
-      "started_at": "2026-10-06T18:59:35.418999+00:00",
+      "started_at": "2026-10-07T16:11:48.576091+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/native-scale"
+        "runs/pending-proofs-rust-six-current/native-scale"
       ],
-      "started_at": "2026-10-06T18:59:35.657670+00:00",
+      "started_at": "2026-10-07T16:11:48.796768+00:00",
       "returncode": 0
     },
     {
       "args": [
-        "runs/20261006-repository-rust-six/negative-scale/native-scale"
+        "runs/pending-proofs-rust-six-current/negative-scale/native-scale"
       ],
-      "started_at": "2026-10-06T18:59:36.026550+00:00",
+      "started_at": "2026-10-07T16:11:49.197825+00:00",
       "returncode": 3
     }
   ],
-  "finished_at": "2026-10-06T18:59:36.392655+00:00"
+  "finished_at": "2026-10-07T16:11:49.588135+00:00"
 }

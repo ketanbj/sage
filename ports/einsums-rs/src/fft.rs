@@ -18,12 +18,6 @@ pub fn transform(input: &[Complex], inverse: bool) -> Vec<Complex> {
 }
 pub fn frequencies(n: usize, d: f64) -> Vec<f64> {
     (0..n)
-        .map(|i| {
-            (if i < (n + 1) / 2 {
-                i as f64
-            } else {
-                i as f64 - n as f64
-            }) / (n as f64 * d)
-        })
+        .map(|i| crate::proof_contract::frequency_bin(n, i, false) as f64 / (n as f64 * d))
         .collect()
 }

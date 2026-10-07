@@ -93,3 +93,28 @@ fn bounded_api_rejects_inconsistent_shape_data_metadata() {
     };
     assert!(crate::api::execute(&request).is_err());
 }
+
+#[test]
+fn concurrent_runtime_configuration_and_profile_lifetimes() {
+    use crate::api::runtime::{self, ConfigValue, Section};
+    let workers: Vec<_> = (0..8)
+        .map(|i| {
+            std::thread::spawn(move || {
+                let key = format!("pending-proofs-worker-{i}");
+                for value in 0..64 {
+                    runtime::set("int", &key, ConfigValue::Integer(value)).unwrap();
+                    assert!(matches!(runtime::get("int", &key).unwrap(), ConfigValue::Integer(x) if x == value));
+                    assert!(runtime::set("int", &key, ConfigValue::Text("invalid".into())).is_err());
+                    assert!(matches!(runtime::get("int", &key).unwrap(), ConfigValue::Integer(x) if x == value));
+                    let mut section = Section::new(&key);
+                    section.end();
+                    section.end(); // Explicit end plus drop must record only once.
+                }
+                assert_eq!(runtime::profiles()[&key].1, 64);
+            })
+        })
+        .collect();
+    for worker in workers {
+        worker.join().unwrap();
+    }
+}

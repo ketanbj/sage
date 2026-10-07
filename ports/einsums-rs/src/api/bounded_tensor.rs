@@ -8,17 +8,17 @@ use crate::Tensor;
 use num_complex::Complex64 as C;
 
 fn dyad(x: f64) -> bool {
-    x.is_finite()
-        && (-16.0..=15.875).contains(&x)
-        && (x * 8.0).fract() == 0.0
-        && (x != 0.0 || x.to_bits() == 0)
+    crate::proof_contract::dyad_bits(x.to_bits())
 }
-fn eligible(a: &Array) -> bool {
-    a.dtype == DType::Float64
-        && a.shape.len() == 2
-        && a.shape.iter().all(|&d| (1..=4).contains(&d))
-        && a.values.len() == a.shape[0] * a.shape[1]
-        && a.values.iter().all(|z| z.im == 0.0 && dyad(z.re))
+fn metadata(a: &Array) -> crate::proof_contract::Metadata {
+    crate::proof_contract::Metadata {
+        f64: a.dtype == DType::Float64,
+        rank: a.shape.len(),
+        rows: a.shape.first().copied().unwrap_or(0),
+        cols: a.shape.get(1).copied().unwrap_or(0),
+        values: a.values.len(),
+        dyadic: a.values.iter().all(|z| z.im == 0.0 && dyad(z.re)),
+    }
 }
 pub(super) fn execute(req: &Request, alpha: C) -> Option<Result<Response>> {
     let op = match req.op.as_str() {
@@ -31,25 +31,19 @@ pub(super) fn execute(req: &Request, alpha: C) -> Option<Result<Response>> {
         _ => return None,
     };
     let binary = matches!(op, 1 | 2 | 4);
-    if req.arrays.len() != if binary { 2 } else { 1 } {
-        return None;
-    }
-    let a = &req.arrays[0];
-    if !eligible(a) {
+    let a = req.arrays.first()?;
+    let b = req.arrays.get(1).unwrap_or(a);
+    if !crate::proof_contract::route(
+        op,
+        req.arrays.len(),
+        metadata(a),
+        metadata(b),
+        alpha.im == 0.0 && dyad(alpha.re),
+    ) {
         return None;
     }
     let ta = Tensor::from_vec(a.shape.clone(), a.values.iter().map(|z| z.re).collect()).ok()?;
     let tb = if binary {
-        let b = &req.arrays[1];
-        if !eligible(b)
-            || if op == 4 {
-                a.shape[1] != b.shape[0]
-            } else {
-                a.shape != b.shape
-            }
-        {
-            return None;
-        }
         Some(Tensor::from_vec(b.shape.clone(), b.values.iter().map(|z| z.re).collect()).ok()?)
     } else {
         None

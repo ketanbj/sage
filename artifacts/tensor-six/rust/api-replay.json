@@ -7,7 +7,7 @@
   "python_checks": 864,
   "json_ffi_checks": 864,
   "library": "ports/einsums-rs/target/debug/libsage_einsums.dylib",
-  "library_sha256": "73db03509f7c9d2eee2f2cd1a1ecb5606c49872fd5f7a430a09e36e22c9091f0",
+  "library_sha256": "3e7a535550ef9ef3ef21f372a6ca86ccff0b6a58a8f7c263e8ad094c1435d916",
   "checks": [
     {
       "operation": "copy",

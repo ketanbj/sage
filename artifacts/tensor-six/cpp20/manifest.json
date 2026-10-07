@@ -244,11 +244,16 @@
     "scale_4x4"
   ],
   "public_api_bindings": {
-    "ports/einsums-rs/src/api/bounded_tensor.rs": "306008724194429610f0098cd040f5da2e7edd3305a99e08d17adfd4cec57a48",
-    "ports/einsums-rs/src/api/mod.rs": "1ff2a2d3cb8205e7bd06f61b55f109aae97604bed293e67bdcd80d4a05a2750b",
+    "ports/einsums-cpp/api/execute.hpp": "40f036a39c24cbdd032d0d0be6f2af6c3d3ce85943eec1ec692c5676a9aa3e0c",
+    "ports/einsums-cpp/sage_api.h": "dadc824e30d0cc8e295976a93c27f012b4109aaaf95710d3a3ab12a818c8fd3e",
+    "ports/einsums-rs/src/lib.rs": "5b22175e25ffbbfb2d9173d75e6b241ae320d54c4b8c23721c81e545e04ebe38",
+    "ports/einsums-rs/src/proof_contract.rs": "2a5471e364b12cc1e8679892a17be3b189bdf4dd5cac34e41115bd3650e346c6",
+    "ports/einsums-cpp/api/proof_contract.hpp": "d09327c812fb120efdbd9046eac00061ede1170b7a3fe76340fc9748b212fcfd",
+    "ports/einsums-rs/src/api/bounded_tensor.rs": "283635c187dd0856a3b3ad7acbea5358ee49ecd90b92a677e31b59e2200cc25b",
+    "ports/einsums-rs/src/api/mod.rs": "39a3a906ce6b3cf14583079f9760086926bb54928f97703b10bd849e794fec0e",
     "ports/einsums-rs/src/protocol.rs": "68db4fcdf8dd85126c89ac9bb162d0975be5dab69edbd83fbba426a0fbab840c",
-    "ports/einsums-cpp/api/bounded_tensor.hpp": "a1a831da51cb0940f1cdfe543f9482e2a6fb76a63b28b063019e4b6e62799dc5",
-    "ports/einsums-cpp/api/execute.cpp": "e77fa933de7c56083120055624e58e00267bd81393e6370c7114699b48aa1459",
+    "ports/einsums-cpp/api/bounded_tensor.hpp": "d2fc6976dffe003314c4282dc83684bbf3186d4d19e16787a3abe7019b585256",
+    "ports/einsums-cpp/api/execute.cpp": "24c04c1c1a4cfb3ec3ca01c9c830f2b05deba6461f08568ff4ed945db2d5249a",
     "ports/einsums-cpp/driver.cpp": "9a45fa7c6e82ec5a8abe88b66f9aa88d76acbb73832aa408fffe9c1d0d5236dc",
     "ports/einsums-cpp/library_driver.cpp": "fe25080196d179b43a825a7c59ea65e262600888e450624f868a672231d732d2"
   },
@@ -258,7 +263,7 @@
     "tensor_source.rs": "eb79bd57a92ef2e4dc9aef5f5563d90fae602e90d02912df640db8023ad82dfd",
     "kernels.hpp": "8091a7930e353894fb63465a892a7dda28a4633c13ab516c54c3e82bb6f508cd",
     "expression.rs": "12cf9a08c281ca0569fcb6736b437c37d54ac876d8239ecc4140e7d053d49c42",
-    "proof_runner.py": "033a78fe20b9c592e316f17def63f46e36ab113f166314dcbdb18ffc265971a8",
+    "proof_runner.py": "ccd4e24d0a72fb1535d96f10b737c17f86acdc45cb828b34d1e952b94557e71f",
     "proof_support.py": "8096cd64fe1d53031d13ae8186b21707ff291c24a8b5a469f9c99acfba6610ea",
     "compat.hpp": "ca0aeb8914efd39fe898b79a0d9e0f128615488ba96b56268f79e9213cb4d471",
     "tensor.rs": "ca9472079ae898b4ea5eead0f4f563c97b265bdf07a51aeda65ad31d428ea712"
@@ -1746,7 +1751,7 @@
         ]
       }
     },
-    "checker_source_sha256": "033a78fe20b9c592e316f17def63f46e36ab113f166314dcbdb18ffc265971a8"
+    "checker_source_sha256": "ccd4e24d0a72fb1535d96f10b737c17f86acdc45cb828b34d1e952b94557e71f"
   },
   "commands": [
     {
@@ -1754,7 +1759,7 @@
         ".sage/verification/kani-0.68.0/bin/kani-driver",
         "--version"
       ],
-      "started_at": "2026-10-06T18:58:45.454809+00:00",
+      "started_at": "2026-10-07T16:09:38.080372+00:00",
       "returncode": 0
     },
     {
@@ -1762,7 +1767,7 @@
         ".sage/verification/kani-0.68.0/bin/cbmc",
         "--version"
       ],
-      "started_at": "2026-10-06T18:58:45.468185+00:00",
+      "started_at": "2026-10-07T16:09:38.095461+00:00",
       "returncode": 0
     },
     {
@@ -1774,7 +1779,7 @@
         "{{.Id}}",
         "sage-einsums:22a1159"
       ],
-      "started_at": "2026-10-06T18:58:45.474076+00:00",
+      "started_at": "2026-10-07T16:09:38.101792+00:00",
       "returncode": 0
     },
     {
@@ -1787,19 +1792,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/public-method-certificate.cid",
+        "runs/pending-proofs-cpp20-six-current/public-method-certificate.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "clang++-18 -std=c++20 -fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm /work/certificate/modern.cpp -o /work/certificate/modern.ll && clang++-18 -std=c++11 -fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm /work/certificate/lowered.cpp -o /work/certificate/lowered.ll"
       ],
-      "started_at": "2026-10-06T18:58:45.512188+00:00",
+      "started_at": "2026-10-07T16:09:38.150746+00:00",
       "returncode": 0
     },
     {
@@ -1812,25 +1817,25 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/expression-certificate.cid",
+        "runs/pending-proofs-cpp20-six-current/expression-certificate.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "clang++-18 -std=c++20 -fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm /work/expression-certificate/modern.cpp -o /work/expression-certificate/modern.ll && clang++-18 -std=c++11 -fno-autolink -O2 -fno-strict-aliasing -mllvm -inline-threshold=100000 -mllvm -enable-noalias-to-md-conversion=false -ffp-contract=off -fno-vectorize -fno-slp-vectorize -S -emit-llvm /work/expression-certificate/lowered.cpp -o /work/expression-certificate/lowered.ll"
       ],
-      "started_at": "2026-10-06T18:58:48.969025+00:00",
+      "started_at": "2026-10-07T16:09:42.818541+00:00",
       "returncode": 0
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/cbmc",
-        "runs/20261006-repository-cpp20-six/negative-copy/copy_2x3.cpp",
+        "runs/pending-proofs-cpp20-six-current/negative-copy/copy_2x3.cpp",
         "--cpp11",
         "--object-bits",
         "12",
@@ -1844,13 +1849,13 @@
         "--trace",
         "--json-ui"
       ],
-      "started_at": "2026-10-06T18:58:54.179282+00:00",
+      "started_at": "2026-10-07T16:09:48.924978+00:00",
       "returncode": 10
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/cbmc",
-        "runs/20261006-repository-cpp20-six/negative-add/add_2x3.cpp",
+        "runs/pending-proofs-cpp20-six-current/negative-add/add_2x3.cpp",
         "--cpp11",
         "--object-bits",
         "12",
@@ -1864,13 +1869,13 @@
         "--trace",
         "--json-ui"
       ],
-      "started_at": "2026-10-06T18:58:54.427354+00:00",
+      "started_at": "2026-10-07T16:09:49.195495+00:00",
       "returncode": 10
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/cbmc",
-        "runs/20261006-repository-cpp20-six/negative-multiply/multiply_2x3.cpp",
+        "runs/pending-proofs-cpp20-six-current/negative-multiply/multiply_2x3.cpp",
         "--cpp11",
         "--object-bits",
         "12",
@@ -1884,13 +1889,13 @@
         "--trace",
         "--json-ui"
       ],
-      "started_at": "2026-10-06T18:58:54.702982+00:00",
+      "started_at": "2026-10-07T16:09:49.539140+00:00",
       "returncode": 10
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/cbmc",
-        "runs/20261006-repository-cpp20-six/negative-transpose/transpose_2x3.cpp",
+        "runs/pending-proofs-cpp20-six-current/negative-transpose/transpose_2x3.cpp",
         "--cpp11",
         "--object-bits",
         "12",
@@ -1904,13 +1909,13 @@
         "--trace",
         "--json-ui"
       ],
-      "started_at": "2026-10-06T18:58:54.970937+00:00",
+      "started_at": "2026-10-07T16:09:49.835930+00:00",
       "returncode": 10
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/cbmc",
-        "runs/20261006-repository-cpp20-six/negative-matmul/matmul_2x3x4.cpp",
+        "runs/pending-proofs-cpp20-six-current/negative-matmul/matmul_2x3x4.cpp",
         "--cpp11",
         "--object-bits",
         "12",
@@ -1924,13 +1929,13 @@
         "--trace",
         "--json-ui"
       ],
-      "started_at": "2026-10-06T18:58:55.203384+00:00",
+      "started_at": "2026-10-07T16:09:50.091324+00:00",
       "returncode": 10
     },
     {
       "args": [
         ".sage/verification/kani-0.68.0/bin/cbmc",
-        "runs/20261006-repository-cpp20-six/negative-scale/scale_2x3.cpp",
+        "runs/pending-proofs-cpp20-six-current/negative-scale/scale_2x3.cpp",
         "--cpp11",
         "--object-bits",
         "12",
@@ -1944,7 +1949,7 @@
         "--trace",
         "--json-ui"
       ],
-      "started_at": "2026-10-06T18:58:55.863230+00:00",
+      "started_at": "2026-10-07T16:09:50.819950+00:00",
       "returncode": 10
     },
     {
@@ -1957,19 +1962,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-build-copy.cid",
+        "runs/pending-proofs-cpp20-six-current/native-build-copy.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-copy.cpp -o /work/native-copy && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-copy/native-copy.cpp -o /work/negative-copy/native-copy"
       ],
-      "started_at": "2026-10-06T18:58:56.124575+00:00",
+      "started_at": "2026-10-07T16:09:51.120452+00:00",
       "returncode": 0
     },
     {
@@ -1982,19 +1987,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-baseline-copy.cid",
+        "runs/pending-proofs-cpp20-six-current/native-baseline-copy.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/native-copy"
       ],
-      "started_at": "2026-10-06T18:58:59.988268+00:00",
+      "started_at": "2026-10-07T16:09:55.416724+00:00",
       "returncode": 0
     },
     {
@@ -2007,19 +2012,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-mutant-copy.cid",
+        "runs/pending-proofs-cpp20-six-current/native-mutant-copy.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/negative-copy/native-copy"
       ],
-      "started_at": "2026-10-06T18:59:00.225746+00:00",
+      "started_at": "2026-10-07T16:09:55.815431+00:00",
       "returncode": 3
     },
     {
@@ -2032,19 +2037,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-build-add.cid",
+        "runs/pending-proofs-cpp20-six-current/native-build-add.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-add.cpp -o /work/native-add && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-add/native-add.cpp -o /work/negative-add/native-add"
       ],
-      "started_at": "2026-10-06T18:59:00.467754+00:00",
+      "started_at": "2026-10-07T16:09:56.157524+00:00",
       "returncode": 0
     },
     {
@@ -2057,19 +2062,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-baseline-add.cid",
+        "runs/pending-proofs-cpp20-six-current/native-baseline-add.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/native-add"
       ],
-      "started_at": "2026-10-06T18:59:04.822682+00:00",
+      "started_at": "2026-10-07T16:10:00.747878+00:00",
       "returncode": 0
     },
     {
@@ -2082,19 +2087,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-mutant-add.cid",
+        "runs/pending-proofs-cpp20-six-current/native-mutant-add.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/negative-add/native-add"
       ],
-      "started_at": "2026-10-06T18:59:05.046664+00:00",
+      "started_at": "2026-10-07T16:10:01.020842+00:00",
       "returncode": 3
     },
     {
@@ -2107,19 +2112,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-build-multiply.cid",
+        "runs/pending-proofs-cpp20-six-current/native-build-multiply.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-multiply.cpp -o /work/native-multiply && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-multiply/native-multiply.cpp -o /work/negative-multiply/native-multiply"
       ],
-      "started_at": "2026-10-06T18:59:05.284921+00:00",
+      "started_at": "2026-10-07T16:10:01.358172+00:00",
       "returncode": 0
     },
     {
@@ -2132,19 +2137,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-baseline-multiply.cid",
+        "runs/pending-proofs-cpp20-six-current/native-baseline-multiply.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/native-multiply"
       ],
-      "started_at": "2026-10-06T18:59:09.628789+00:00",
+      "started_at": "2026-10-07T16:10:05.997305+00:00",
       "returncode": 0
     },
     {
@@ -2157,19 +2162,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-mutant-multiply.cid",
+        "runs/pending-proofs-cpp20-six-current/native-mutant-multiply.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/negative-multiply/native-multiply"
       ],
-      "started_at": "2026-10-06T18:59:09.878318+00:00",
+      "started_at": "2026-10-07T16:10:06.276053+00:00",
       "returncode": 3
     },
     {
@@ -2182,19 +2187,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-build-transpose.cid",
+        "runs/pending-proofs-cpp20-six-current/native-build-transpose.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-transpose.cpp -o /work/native-transpose && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-transpose/native-transpose.cpp -o /work/negative-transpose/native-transpose"
       ],
-      "started_at": "2026-10-06T18:59:10.167810+00:00",
+      "started_at": "2026-10-07T16:10:06.602967+00:00",
       "returncode": 0
     },
     {
@@ -2207,19 +2212,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-baseline-transpose.cid",
+        "runs/pending-proofs-cpp20-six-current/native-baseline-transpose.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/native-transpose"
       ],
-      "started_at": "2026-10-06T18:59:14.579219+00:00",
+      "started_at": "2026-10-07T16:10:11.046166+00:00",
       "returncode": 0
     },
     {
@@ -2232,19 +2237,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-mutant-transpose.cid",
+        "runs/pending-proofs-cpp20-six-current/native-mutant-transpose.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/negative-transpose/native-transpose"
       ],
-      "started_at": "2026-10-06T18:59:14.884967+00:00",
+      "started_at": "2026-10-07T16:10:11.284574+00:00",
       "returncode": 3
     },
     {
@@ -2257,19 +2262,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-build-matmul.cid",
+        "runs/pending-proofs-cpp20-six-current/native-build-matmul.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-matmul.cpp -o /work/native-matmul && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-matmul/native-matmul.cpp -o /work/negative-matmul/native-matmul"
       ],
-      "started_at": "2026-10-06T18:59:15.116594+00:00",
+      "started_at": "2026-10-07T16:10:11.621861+00:00",
       "returncode": 0
     },
     {
@@ -2282,19 +2287,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-baseline-matmul.cid",
+        "runs/pending-proofs-cpp20-six-current/native-baseline-matmul.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/native-matmul"
       ],
-      "started_at": "2026-10-06T18:59:19.618727+00:00",
+      "started_at": "2026-10-07T16:10:16.206314+00:00",
       "returncode": 0
     },
     {
@@ -2307,19 +2312,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-mutant-matmul.cid",
+        "runs/pending-proofs-cpp20-six-current/native-mutant-matmul.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/negative-matmul/native-matmul"
       ],
-      "started_at": "2026-10-06T18:59:19.881227+00:00",
+      "started_at": "2026-10-07T16:10:16.525402+00:00",
       "returncode": 3
     },
     {
@@ -2332,19 +2337,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-build-scale.cid",
+        "runs/pending-proofs-cpp20-six-current/native-build-scale.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "clang++-18 -std=c++20 -O2 -ffp-contract=off /work/native-scale.cpp -o /work/native-scale && clang++-18 -std=c++20 -O2 -ffp-contract=off /work/negative-scale/native-scale.cpp -o /work/negative-scale/native-scale"
       ],
-      "started_at": "2026-10-06T18:59:20.158497+00:00",
+      "started_at": "2026-10-07T16:10:16.855005+00:00",
       "returncode": 0
     },
     {
@@ -2357,19 +2362,19 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-baseline-scale.cid",
+        "runs/pending-proofs-cpp20-six-current/native-baseline-scale.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/native-scale"
       ],
-      "started_at": "2026-10-06T18:59:24.289234+00:00",
+      "started_at": "2026-10-07T16:10:21.068830+00:00",
       "returncode": 0
     },
     {
@@ -2382,21 +2387,21 @@
         "--network",
         "none",
         "--cidfile",
-        "runs/20261006-repository-cpp20-six/native-mutant-scale.cid",
+        "runs/pending-proofs-cpp20-six-current/native-mutant-scale.cid",
         "--memory",
         "2g",
         "--cpus",
         "2",
         "-v",
-        "runs/20261006-repository-cpp20-six:/work",
+        "runs/pending-proofs-cpp20-six-current:/work",
         "sha256:494d9ee8c06c41d53e2286de16cfc6780c9e9afd960e92c4c4b40469f07ece87",
         "sh",
         "-c",
         "/work/negative-scale/native-scale"
       ],
-      "started_at": "2026-10-06T18:59:24.530995+00:00",
+      "started_at": "2026-10-07T16:10:21.345103+00:00",
       "returncode": 3
     }
   ],
-  "finished_at": "2026-10-06T18:59:24.790879+00:00"
+  "finished_at": "2026-10-07T16:10:21.727838+00:00"
 }

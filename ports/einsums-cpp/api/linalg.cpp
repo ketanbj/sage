@@ -1,4 +1,6 @@
 #include "linalg.hpp"
+#include "proof_contract.hpp"
+#include <bit>
 #include <Eigen/Dense>
 #include <Eigen/Eigenvalues>
 #include <Eigen/SVD>
@@ -31,9 +33,15 @@ std::pair<Array, Shape> lu(const Array &input) {
   Shape piv;
   for (std::size_t k = 0; k < std::min(m, n); ++k) {
     std::size_t p = k;
-    for (std::size_t i = k + 1; i < m; ++i)
-      if (std::abs(a.values[i * n + k]) > std::abs(a.values[p * n + k]))
-        p = i;
+    for (std::size_t i = k + 1; i < m; ++i) {
+      auto x = a.values[i * n + k], y = a.values[p * n + k];
+      bool real_finite = x.imag() == 0. && y.imag() == 0. &&
+        std::isfinite(x.real()) && std::isfinite(y.real());
+      bool greater = real_finite ? contract::greater_magnitude(
+        std::bit_cast<std::uint64_t>(x.real()), std::bit_cast<std::uint64_t>(y.real())) :
+        std::abs(x) > std::abs(y);
+      if (greater) p = i;
+    }
     piv.push_back(p + 1);
     for (std::size_t j = 0; j < n; ++j)
       std::swap(a.values[k * n + j], a.values[p * n + j]);

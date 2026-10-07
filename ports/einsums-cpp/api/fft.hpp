@@ -1,5 +1,6 @@
 #pragma once
 #include "array.hpp"
+#include "proof_contract.hpp"
 #include <numbers>
 namespace sage_cpp::api {
 inline Array transform(const Array &a, const std::string &op, std::size_t n) {
@@ -37,9 +38,7 @@ inline Array frequencies(std::size_t n, double d, bool real = false) {
           "ValueError");
   auto out = Array::zeros(DType::Float64, {real ? n / 2 + 1 : n});
   for (std::size_t i = 0; i < out.values.size(); ++i)
-    out.values[i] = (real || i < (n + 1) / 2
-                         ? static_cast<double>(i)
-                         : static_cast<double>(i) - static_cast<double>(n)) /
+    out.values[i] = static_cast<double>(contract::frequency_bin(n, i, real)) /
                     (static_cast<double>(n) * d);
   return out;
 }

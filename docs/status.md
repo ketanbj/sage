@@ -1,7 +1,6 @@
 # Current status
 
-This page summarizes the recorded state after the October 6, 2026 repository
-cleanup. Counts below describe different checks and should not be added together.
+This page summarizes the October 7, 2026 work on `prending-proofs`. Counts below describe different checks and should not be added together.
 
 ## What is implemented
 
@@ -28,12 +27,14 @@ translation by a model remains future work.
 
 | Evidence | Recorded result | What it establishes |
 |---|---|---|
-| Maintained project tests | 129 passed, 5 backend-specific skips | Regression checks after cleanup |
+| Maintained project tests | 172 passed, 5 backend-specific skips | Current Python unit/integration checks; seven Rust tests and one compile-fail lifetime check pass separately |
 | C++ native profile grid | 4,416 cases passed | Selected operation/shape/value combinations |
 | C++ Python profile runner | 69 checks passed | Calls through the campaign's Python entrypoints |
 | C++ native safety contracts | 2 CTest contracts passed under ASan/UBSan | Tested ownership, runtime and error behavior |
 | Fresh C++ campaign | 128 new accepted SymSan inputs across 23 operations, all passing | Sampled agreement with upstream and NumPy |
 | Six-operation formal checks | 144 obligations passed per language | The stated bounded production-method specification |
+| Extended formal contracts | 69 obligations per language, five symbolic/native fault controls | Production guards, dyadic membership, real pivot order, FFT bins and larger copy/transpose layouts |
+| Installed/native interfaces | C11 consumers for both libraries; C++ overload/ownership consumer and concurrent calls pass | Tested SAGE ABI and lifetime/error/thread behavior on this platform |
 | Public API proof-domain replay | 864 Python and 864 JSON/FFI exact-bit checks per language | Tested routing and adapter behavior |
 
 Both translations have saved-input API replays over 31 API groups and four dtypes.
@@ -58,8 +59,9 @@ methods. The domain is owned, contiguous rank-two float64 data with dimensions
 1–4 and signed-byte values divided by eight. Scale uses the same scalar domain.
 
 The theorem preserves ordered arithmetic expressions under explicit compiler,
-arithmetic and memory assumptions. The public adapters are tested natively;
-parsing, lifetimes and error behavior are not symbolically proved. Upstream scalar
+arithmetic and memory assumptions. Pure production eligibility guards now have separate symbolic checks. Surrounding
+parsing, lifetimes and error behavior are tested natively and remain outside the
+theorem. Upstream scalar
 copy/transpose proofs are separate evidence. Full upstream dispatch and vendor
 BLAS behavior are outside the six-operation theorem.
 
@@ -71,13 +73,18 @@ the broader port milestone, including older project-test counts.
 
 ## What remains
 
-The full-library compatibility gate remains **`INCOMPLETE_SCOPE`**. Work needed
-before a broader compatibility claim includes:
+The full-library compatibility gate remains **`INCOMPLETE_SCOPE`**.
 
-1. Agree on required calling behavior and classify the recorded reference disagreements.
-2. Validate complete interfaces, lifetimes, errors, threading and C++ overload/ABI requirements.
-3. Expand generated numerical inputs and explore library computation paths. Current full-profile SymSan instrumentation covers the input decoder only.
-4. Extend proofs to public adapters, larger domains and additional operation families, including upstream dispatch/backend contracts.
+The [extension report](../artifacts/pending-proofs/report.md) records work added
+for the first four areas: an owner-selected corrected-semantics contract,
+classification of all 4,118 historical disagreements, interface/ABI/thread checks,
+a separate library-decision SymSan experiment, larger-domain proofs and upstream
+backend probes. Whole-library scope remains incomplete. Next steps are:
+
+1. Resolve 351 historical numerical residual findings per language and the newly recorded upstream buffer-layout/contraction findings.
+2. Prove surrounding public parsing, serialization, errors and lifetime paths; finish calling variants and explicitly decide any upstream C++ overload/ABI compatibility requirement.
+3. Explore complete numerical library paths with tooling that supports their arithmetic. The full-profile SymSan campaign remains decoder-only.
+4. Extend all six arithmetic operations beyond the current domain, prove complete additional operation families, and establish upstream planner/dispatch/thread/vendor-backend contracts.
 5. Run downstream Psi4 regressions and an agreed platform matrix, then compare native performance.
 
 HIP/GPU is excluded from the current scope. Scientific pilot selection is a

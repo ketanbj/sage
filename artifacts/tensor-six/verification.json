@@ -4,9 +4,9 @@
   "languages": {
     "rust": {
       "status": "BOUNDED_TENSOR_API_PROVED",
-      "proof_bundle": "runs/20261006-repository-rust-six",
-      "manifest_sha256": "04ff1507e1cdcc32dc8a49e399c78a4bd1ca6b099a61db206656cf5e4a6336a0",
-      "published_manifest_sha256": "5ed5980a96ab6fe2da619c1a673639231ffa808332e7dca9f03b6e929837b0e1",
+      "proof_bundle": "runs/pending-proofs-rust-six-current",
+      "manifest_sha256": "90733b771b5ca59ca9cd23e76cffbf4ea86a02d6133896624678beb7c2ad3fc1",
+      "published_manifest_sha256": "454119656b163fc18a0bab73a1ae5995fa46b6f95e691f874ce6e880f3441906",
       "method_obligations": 144,
       "fault_controls": 6,
       "native_fault_replays": 6,
@@ -15,9 +15,9 @@
     },
     "cpp20": {
       "status": "BOUNDED_TENSOR_API_PROVED",
-      "proof_bundle": "runs/20261006-repository-cpp20-six",
-      "manifest_sha256": "6b9ef049e3ded782334ef22d7e2fb9164e6b7507154076e2044c9fb338acdc22",
-      "published_manifest_sha256": "c62670d9492e8926b99274af6c5342ce20089b2782d7b684ae557ea519d959d7",
+      "proof_bundle": "runs/pending-proofs-cpp20-six-current",
+      "manifest_sha256": "f3c7b45c5a645d270dc7f70a93b0d7701e5fe0901f2d5f26610ba7d586183790",
+      "published_manifest_sha256": "ca8acf52cd8cf8a8df5402e78d3f802d22f2b6b0f79e139641d6f455da0cd88e",
       "method_obligations": 144,
       "fault_controls": 6,
       "native_fault_replays": 6,

@@ -11,13 +11,18 @@ pub fn lu(a: &Array) -> Result<(Array, Vec<usize>)> {
     let mut a = a.clone();
     let mut piv = Vec::new();
     for k in 0..m.min(n) {
-        let p = (k..m)
-            .max_by(|&i, &j| {
-                a.values[i * n + k]
-                    .norm()
-                    .total_cmp(&a.values[j * n + k].norm())
-            })
-            .unwrap();
+        let mut p = k;
+        for i in k + 1..m {
+            let (x, y) = (a.values[i * n + k], a.values[p * n + k]);
+            let greater = if x.im == 0.0 && y.im == 0.0 && x.re.is_finite() && y.re.is_finite() {
+                crate::proof_contract::greater_magnitude(x.re.to_bits(), y.re.to_bits())
+            } else {
+                x.re.hypot(x.im) > y.re.hypot(y.im)
+            };
+            if greater {
+                p = i;
+            }
+        }
         piv.push(p + 1);
         for j in 0..n {
             a.values.swap(k * n + j, p * n + j);

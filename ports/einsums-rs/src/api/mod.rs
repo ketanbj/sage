@@ -143,6 +143,14 @@ fn truncate_columns(a: &Array, k: usize) -> Result<Array> {
     )
 }
 pub fn execute(req: &Request) -> Result<Response> {
+    let arity = match req.op.as_str() {
+        "copy" | "permute" | "scale" | "negate" => Some(1),
+        "add" | "subtract" | "multiply" | "divide" | "matmul" => Some(2),
+        _ => None,
+    };
+    if arity.is_some_and(|n| req.arrays.len() != n) {
+        return Err(ApiError::value("wrong number of array arguments"));
+    }
     for a in &req.arrays {
         a.validate()?;
     }

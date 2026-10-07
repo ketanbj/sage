@@ -1,10 +1,19 @@
 //! Independent Rust implementation. Module coverage is recorded by SAGE, not inferred
 //! from this crate's existence. No call delegates calculations to upstream Einsums.
+//! Borrowed views cannot escape their owner:
+//! ```compile_fail
+//! use sage_einsums::{Tensor, View};
+//! fn dangling() -> View<'static> {
+//!     let owner = Tensor::from_vec(vec![1], vec![1.0]).unwrap();
+//!     owner.view()
+//! }
+//! ```
 pub mod api;
 pub mod complex;
 pub mod ffi;
 pub mod fft;
 pub mod linalg;
+pub mod proof_contract;
 pub mod protocol;
 pub mod tensor;
 pub use tensor::{Error, Tensor, View};

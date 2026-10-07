@@ -135,6 +135,10 @@ struct Response {
 Json execute(const Json &request) {
   Request r(request);
   const auto &op = r.op;
+  const bool unary = op == "copy" || op == "permute" || op == "scale" || op == "negate";
+  const bool binary = op == "add" || op == "subtract" || op == "multiply" || op == "divide" || op == "matmul";
+  require((!unary || r.arrays.size() == 1) && (!binary || r.arrays.size() == 2),
+          "wrong number of array arguments", "ValueError");
   auto alpha = r.z("alpha", 1.), beta = r.z("beta", 0.);
   Response out;
   auto result = [&](Array a) { out.arrays.push_back(std::move(a)); };
@@ -531,7 +535,9 @@ extern "C" char *sage_api_request(const void *input,
     } catch (const std::exception &e) {
       response = {{"error", {{"kind", "RuntimeError"}, {"message", e.what()}}}};
     }
-    auto text = response.dump();
+    // Parser diagnostics can include invalid UTF-8 from the rejected input.
+    // Keep the error envelope readable instead of turning it into a null result.
+    auto text = response.dump(-1, ' ', false, Json::error_handler_t::replace);
     auto *out = static_cast<char *>(std::malloc(text.size() + 1));
     if (!out)
       return nullptr;

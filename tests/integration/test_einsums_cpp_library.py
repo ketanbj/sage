@@ -106,3 +106,46 @@ def test_full_native_api_under_sanitizers(tmp_path):
     subprocess.run(
         ["ctest", "--test-dir", str(build), "--output-on-failure"], capture_output=True, check=True
     )
+
+
+def test_installed_cpp_overloads_and_abi_consumer(library_binary, tmp_path):
+    prefix = tmp_path / "install"
+    subprocess.run(
+        ["cmake", "--install", str(library_binary.parent), "--prefix", str(prefix)],
+        capture_output=True,
+        check=True,
+    )
+    consumer = tmp_path / "consumer"
+    consumer.mkdir()
+    (consumer / "CMakeLists.txt").write_text(
+        "\n".join(
+            [
+                "cmake_minimum_required(VERSION 3.20)",
+                "project(consumer LANGUAGES C CXX)",
+                "find_package(Eigen3 REQUIRED NO_MODULE)",
+                "find_package(nlohmann_json 3.11 REQUIRED)",
+                "find_package(HDF5 REQUIRED COMPONENTS C)",
+                f'add_executable(consumer "{PORT / "consumer_tests.cpp"}")',
+                "target_compile_features(consumer PRIVATE cxx_std_20)",
+                "target_compile_options(consumer PRIVATE -Wall -Wextra -Werror -UNDEBUG)",
+                f'target_include_directories(consumer PRIVATE "{prefix / "include"}")',
+                f'find_library(SAGE_LIBRARY sage_einsums_cpp PATHS "{prefix / "lib"}" '
+                "NO_DEFAULT_PATH REQUIRED)",
+                "target_link_libraries(consumer PRIVATE ${SAGE_LIBRARY} Eigen3::Eigen "
+                "nlohmann_json::nlohmann_json hdf5::hdf5)",
+                "",
+            ]
+        )
+    )
+    with (consumer / "CMakeLists.txt").open("a") as config:
+        config.write(f'add_executable(c_consumer "{PORT / "c_consumer_tests.c"}")\n')
+        config.write(f'target_include_directories(c_consumer PRIVATE "{prefix / "include"}")\n')
+        config.write("target_link_libraries(c_consumer PRIVATE ${SAGE_LIBRARY})\n")
+        config.write("target_compile_options(c_consumer PRIVATE -UNDEBUG)\n")
+    build = consumer / "build"
+    subprocess.run(
+        ["cmake", "-S", str(consumer), "-B", str(build)], capture_output=True, check=True
+    )
+    subprocess.run(["cmake", "--build", str(build), "-j", "2"], capture_output=True, check=True)
+    subprocess.run([str(build / "consumer")], capture_output=True, check=True)
+    subprocess.run([str(build / "c_consumer")], capture_output=True, check=True)

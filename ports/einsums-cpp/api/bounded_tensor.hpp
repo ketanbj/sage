@@ -1,31 +1,27 @@
 #pragma once
 #include "array.hpp"
+#include "proof_contract.hpp"
+#include <bit>
 #include "../tensor.hpp"
 #include <optional>
 
 namespace sage_cpp::api {
 // Public API bridge to the proved Tensor methods, restricted to the proof domain.
 inline bool proof_dyad(double x) {
-  return std::isfinite(x) && x >= -16. && x <= 15.875 &&
-         std::trunc(x * 8.) == x * 8. && (x != 0. || !std::signbit(x));
+  return contract::dyad_bits(std::bit_cast<std::uint64_t>(x));
 }
-inline bool proof_array(const Array &a) {
-  return a.dtype == DType::Float64 && a.shape.size() == 2 &&
-         a.shape[0] >= 1 && a.shape[0] <= 4 && a.shape[1] >= 1 &&
-         a.shape[1] <= 4 &&
-         a.values.size() == a.shape[0] * a.shape[1] &&
-         std::all_of(a.values.begin(), a.values.end(), [](Complex z) {
-           return z.imag() == 0. && proof_dyad(z.real());
-         });
+inline contract::Metadata proof_metadata(const Array &a) {
+  return {a.dtype == DType::Float64, a.shape.size(),
+          a.shape.empty() ? 0 : a.shape[0], a.shape.size() < 2 ? 0 : a.shape[1],
+          a.values.size(), std::all_of(a.values.begin(), a.values.end(), [](Complex z) {
+            return z.imag() == 0. && proof_dyad(z.real());
+          })};
 }
 inline std::optional<Array> bounded_tensor(unsigned op, const Array &a,
                                          const Array *b, double scalar) {
-  if (op > 5 || !proof_array(a)) return std::nullopt;
   const bool binary = op == 1 || op == 2 || op == 4;
-  if (binary && (!b || !proof_array(*b) ||
-                 (op == 4 ? a.shape[1] != b->shape[0] : a.shape != b->shape)))
-    return std::nullopt;
-  if (op == 5 && !proof_dyad(scalar)) return std::nullopt;
+  if (!contract::route(op, b ? 2u : 1u, proof_metadata(a),
+      proof_metadata(b ? *b : a), proof_dyad(scalar))) return std::nullopt;
   double av[16]{}, bv[16]{};
   for (std::size_t i = 0; i < a.values.size(); ++i) av[i] = a.values[i].real();
   if (binary)
