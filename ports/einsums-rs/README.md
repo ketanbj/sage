@@ -65,7 +65,7 @@ is double precision, with results converted to the requested dtype.
 
 ## Validation
 
-The [six-operation proof](../../docs/tensor-six-proof.md) checks 144 bounded
+The [six-operation proof](../../docs/verification.md#prove-the-six-tensor-operations) checks 144 bounded
 public Tensor obligations. Eligible float64 CPU/Python requests call the same
 methods; six deliberate source faults and native replays accompany the proofs.
 The current [evidence report](../../artifacts/tensor-six/report.md) distinguishes
@@ -77,4 +77,4 @@ replays authenticated, unique, non-seed SymSan inputs against the original compi
 Python extension and this package, checking both against independent numerical
 expectations. It records source/binary hashes, raw outputs and discrepancies. The
 operation/dtype sweep does not establish library-internal concolic coverage or
-whole-library equivalence. See `docs/einsums-api.md` in the SAGE repository.
+whole-library equivalence. See the [API compatibility contract](../../docs/reference.md#api-compatibility).

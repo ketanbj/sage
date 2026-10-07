@@ -105,7 +105,7 @@ def project_root() -> Path:
 
 
 def catalog() -> CandidateCatalog:
-    return CandidateCatalog(project_root() / "candidates")
+    return CandidateCatalog(project_root() / "targets/candidates")
 
 
 def selection_state_path() -> Path:

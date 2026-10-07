@@ -133,8 +133,8 @@ skips**. Rust native checks and C++ CTest contracts passed, along with Ruff and 
 These historical counts predate the removal of the retired demonstration tests.
 
 See [Rust evidence](rust/manifest.json), [C++ evidence](cpp20/manifest.json) and the
-[methodology and rerun instructions](../../docs/tensor-six-proof.md). The manifests
-record raw immutable proof-bundle locations and any reused-check provenance.
+[methodology and rerun instructions](../../docs/verification.md#prove-the-six-tensor-operations).
+The manifests record raw immutable proof-bundle locations and any reused-check provenance.
 Published summary paths are repository-relative. The combined summary retains both
 original and published manifest hashes. Full raw solver bundles are intentionally
 outside Git and must be regenerated or distributed separately.

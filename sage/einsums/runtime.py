@@ -130,7 +130,7 @@ class EinsumsRun:
             config.equivalence.signed_zero_equal,
             candidate_label=self.CANDIDATE_LABEL,
         )
-        self.prompt = root / "prompts" / f"{config.provider.prompt_version}.txt"
+        self.prompt = root / "configs/prompts" / f"{config.provider.prompt_version}.txt"
         env = environment_record()
         commit = subprocess.run(
             ["git", "-C", str(root), "rev-parse", "HEAD"],

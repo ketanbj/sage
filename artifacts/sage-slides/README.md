@@ -53,8 +53,8 @@ exploration, downstream/Psi4 regression and native performance benchmarks. Autom
 full-library model translation also remains pending for both checked-in ports.
 
 Current consolidated evidence: [six-operation report](../tensor-six/report.md).
-Scope and rerun instructions: [six-operation methodology](../../docs/tensor-six-proof.md), [formal verification](../../docs/formal-verification.md),
-[modern C++](../../docs/modern-cpp.md) and the [C++ verification summary](../../ports/einsums-cpp/verification.json).
+Scope and rerun instructions: [six-operation methodology](../../docs/verification.md#prove-the-six-tensor-operations), [formal verification](../../docs/verification.md#separate-upstream-scalar-proof),
+[modern C++](../../docs/status.md) and the [C++ verification summary](../../ports/einsums-cpp/verification.json).
 Immutable proof/campaign/replay evidence remains under `runs/`. The latest C++ campaign
 is `runs/20261006T152014.013938Z-115b5d8bf7/` and API replay is
 `runs/20261006T151151.290470Z-einsums-api-cpp20/`. Presentation build sources, original

@@ -19,7 +19,7 @@ assessment:
     - Scientific priority and PI approval have not been established.
     - No executable adapter, fixtures or validation evidence are distributed for this target.
   evidence:
-    - docs/target-selection.md
+    - docs/development.md#target-selection
     - https://github.com/psi4/gau2grid/tree/a33f56f2beba141e34026cd377b8e1c4aa5ea2f7
   confidence: REASSESSMENT_REQUIRED
   open_pi_questions:

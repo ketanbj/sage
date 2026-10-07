@@ -19,7 +19,7 @@ SHA256 = "a5d39a5d5e748253a553aa62f295c6c397287927a28e5e32691d7ff2eda0c398"
 def main() -> None:
     if (platform.system(), platform.machine()) != ("Darwin", "arm64"):
         raise SystemExit(
-            "This setup script currently pins macOS arm64. See docs/formal-verification.md."
+            "This setup script currently pins macOS arm64. See docs/verification.md#setup-and-run."
         )
     cache = ROOT / ".sage/verification"
     cache.mkdir(parents=True, exist_ok=True)

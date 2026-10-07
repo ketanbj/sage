@@ -56,11 +56,11 @@ assessment:
     - Both ports implement 90 core CPU/Python exports and 16 helpers; exact whole-library compatibility remains incomplete.
     - Six-operation proofs cover a bounded float64 domain; general shapes/dtypes, complete adapters and upstream BLAS remain outside the theorem.
   evidence:
-    - docs/einsums-library.md
-    - docs/einsums-tensors.md
-    - docs/tensor-six-proof.md
+    - docs/status.md
+    - docs/reference.md#campaign-profiles-and-input-format
+    - docs/verification.md#prove-the-six-tensor-operations
     - artifacts/tensor-six/report.md
-    - docs/einsums-candidate.md
+    - docs/development.md#target-selection
     - https://github.com/Einsums/Einsums/tree/22a115978041e905461b24d9ca2a17bfcce01f32
     - https://github.com/psi4/psi4/pull/3050
     - https://github.com/psi4/psi4/pull/3350

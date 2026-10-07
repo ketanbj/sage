@@ -1,28 +1,36 @@
-# SAGE design documentation
+# Documentation guide
 
-Current execution workflow: [Einsums CPU/Python library scope](einsums-library.md), using only
-SymSan-generated validation cases. [The six-operation tensor profile](einsums-tensors.md) remains
-available with an explicit configuration.
+Start with the [project README](../README.md) for a short introduction.
+You can read these guides in order, or choose the one that answers your question.
 
-- [Product requirements](product-requirements.md) defines users, scope, requirements, and success.
-- [Architecture](architecture.md) describes components, flow, trust boundaries, and extension points.
-- [Target selection](target-selection.md) separates candidates, recommendations, and approvals.
-- [Stakeholders and user stories](stakeholders-and-user-stories.md) records provisional users without
-  inventing assignments.
-- [PI discovery questionnaire](pi-discovery-questionnaire.md) lists evidence needed before selection.
-- [Adding a target](adding-a-target.md) defines the candidate and adapter workflow.
-- [Einsums candidate assessment](einsums-candidate.md) defines the proposed whole-library scope,
-  evidence, equivalence dimensions, and feasibility gates.
-- [Equivalence model](equivalence-model.md) defines what SAGE can and cannot conclude.
-- [SymSan integration](symsan-integration.md) documents the pinned concolic toolchain and bounds.
-- [Translation providers](translation-providers.md) covers offline, OpenAI, and future SAM adapters.
-- [Testing](testing.md) describes the verification layers and reproducibility strategy.
-- [Modern C++ translation](modern-cpp.md) records the full CPU/Python port, empirical checks and compatibility gaps.
-- [Bounded formal verification](formal-verification.md) defines the scalar proof pilot and its limits.
-- [Six-operation proofs](tensor-six-proof.md) covers both languages and public API connections.
-- [Repository preparation](repository-preparation.md) documents tracked files and local exclusions.
-- [Operations](operations.md) provides setup, execution, replay, cleanup, and troubleshooting.
-- [Security and safety](security-and-safety.md) records the generated-code threat model and controls.
-- [Upstream pins](upstreams.md) records immutable third-party revisions and build findings.
-- [Implementation plan](implementation-plan.md) captures the MVP build sequence and research gap.
-- [Architecture decisions](adr/) records the major technical choices.
+| Your question | Read |
+|---|---|
+| How do I install it and try it? | [Getting started](getting-started.md) |
+| What has been done, and what is left? | [Current status](status.md) |
+| What do the tests and proofs establish? | [Verification](verification.md) |
+| How does it work, and how do I contribute? | [Development](development.md) |
+| What are the exact contracts and tool versions? | [Technical reference](reference.md) |
+
+For a presentation, use the [overview slides](../artifacts/sage-slides/output/SAGE-Project-Overview.pdf)
+or the [technical slides](../artifacts/sage-slides/output/SAGE-Einsums-and-Symbolic-Verification.pdf).
+For recorded proof results, use the [evidence report](../artifacts/tensor-six/report.md).
+
+## Terms used in the guides
+
+| Term | Meaning here |
+|---|---|
+| Tensor | A multidimensional array. A matrix is a rank-two tensor |
+| Upstream | The original Einsums implementation at the recorded source revision |
+| Port or candidate implementation | The independent Rust or C++ translation being checked |
+| Reference | An independent expected result, usually computed with NumPy |
+| Campaign | A run that generates new inputs and compares the implementations |
+| Replay | Running previously generated inputs again, possibly through more APIs |
+| SymSan | A tool that tracks input-dependent execution and solves constraints to generate test inputs |
+| Bounded proof | An exhaustive check of a stated specification within a fixed domain and assumptions |
+| API | The functions and types a user calls |
+| FFI | The interface used to call the native library from another language |
+
+The guides describe the maintained project. Detailed source-level examples remain
+with the [Rust port](../ports/einsums-rs/README.md) and
+[C++ port](../ports/einsums-cpp/README.md). Historical run bundles are local evidence,
+so links to their paths are not downloads from this repository.

@@ -52,33 +52,21 @@ Python import names. Source development can use
 `EINSUMS_CPP_LIBRARY=/absolute/path/to/libsage_einsums_cpp.dylib` (`.so` on Linux).
 The native CMake install supplies `lib/` and `include/sage-einsums/api/`.
 
-## Validation recorded October 6, 2026
+## Validation
 
-- The complete project suite passes **134 tests**, with **five backend-specific skips**.
-- Broad API checks pass across float32, float64, complex64 and complex128,
-  including numerical residuals, ownership, aliases, decompositions and HDF5.
-- The new 23-operation native grid passes **4,416** operation/shape/value-pattern
-  cases. Python campaign entrypoints pass **69** separate profile checks.
-- Both native CTest contracts pass under ASan/UBSan, including typed view
-  ownership, runtime state, JSON errors, Cholesky and matrix powers.
-- The selected upstream tensor/contraction suites pass **171** tests, with
-  **88 GPU skips** and **96 slow cases deselected**.
-- Upstream linear-algebra and view suites pass **448** tests and fail **40**
-  literal eigenvalue-order or nonunique SVD/nullspace basis comparisons;
-  **16 slow cases are deselected**. Residual/reconstruction checks are separate
-  and pass. These failures remain visible compatibility differences.
-- Saved-corpus replay:
-  `runs/20261006T151151.290470Z-einsums-api-cpp20/` records **15,872** checks over
-  128 authenticated SymSan inputs, 31 API groups and four dtypes. The candidate
-  passes every numerical expectation: **13,816** three-way PASS and **2,056**
-  REFERENCE_DISAGREEMENT. This is a replay, not new symbolic path discovery.
-- The full-library campaign additionally generates **128 new cases across all
-  23 operations**, with upstream, C++ native, C++ Python and NumPy agreement.
-  See the [recorded campaign report](../../runs/20261006T152014.013938Z-115b5d8bf7/report.md).
-  Its completion gate remains INCOMPLETE_SCOPE because finite probes cannot
-  establish the whole library contract.
-- A repaired macOS arm64/Python 3.11 wheel installs in a clean environment and
-  passes solve, complex SVD and HDF5 operations through its bundled native library.
+The [current status guide](../../docs/status.md) separates implementation checks,
+fresh SymSan campaigns, saved-input replay and bounded proofs. The
+[port verification summary](verification.json) retains its recorded milestone
+counts, including compatibility findings and install checks.
+
+The broad C++ port passed its 4,416-case native grid, 69 Python campaign-entrypoint
+checks, four-dtype API checks and two ASan/UBSan native contracts. Its recorded
+128-input API replay has 13,816 passes and 2,056 reference disagreements; its
+separate fresh campaign passes 128 new cases across all 23 operations. The
+full-library gate remains `INCOMPLETE_SCOPE`.
+
+Use [the verification guide](../../docs/verification.md) to reproduce checks and
+interpret disagreements. Full raw run bundles are retained separately from Git.
 
 ## Compatibility and proof scope
 
@@ -90,7 +78,7 @@ scope. The Python numerical/shape differences documented for the Rust port also
 apply here: deterministic truncation, rank thresholds, meaningful pseudoinverse
 shape, complex Lyapunov, useful thin factors and nonunique basis/order choices.
 
-The [six-operation extension](../../docs/tensor-six-proof.md) now proves 144
+The [six-operation extension](../../docs/verification.md#prove-the-six-tensor-operations) now proves 144
 public Tensor method obligations through generic arithmetic and compiler-bound
 expression semantics. The bounded float64 public CPU/Python domain calls those
 methods, with exact-bit adapter checks and six source-fault/native replay controls.
@@ -110,4 +98,4 @@ uv run sage prove --target einsums --language cpp20 --profile tensor-six --jobs 
 Next verification work is contract review of the 2,056 replay disagreements,
 broader payload/computation-path exploration, formal proofs for more kernels
 and public calls, downstream/Psi4 integration and native performance benchmarks.
-See [modern-cpp.md](../../docs/modern-cpp.md) for evidence and scope.
+See [current status](../../docs/status.md) for evidence and scope.

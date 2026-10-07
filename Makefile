@@ -7,8 +7,8 @@ doctor:
 	uv run sage doctor
 
 lint:
-	uv run ruff format --check sage tests tools scripts
-	uv run ruff check sage tests tools scripts
+	uv run ruff format --check sage tests tools
+	uv run ruff check sage tests tools
 	uv run mypy sage
 
 test:
